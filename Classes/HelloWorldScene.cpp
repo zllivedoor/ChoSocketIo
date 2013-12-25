@@ -180,7 +180,7 @@ void HelloWorld::nodeServerCon()
    // _sioClient = SocketIO::connect(*this, "ws://10.13.197.156:8080");
     
     _sioClient->on("battleCast", CC_CALLBACK_2(HelloWorld::battleCastEvent, this));
-    _sioClient->on("battleExec", CC_CALLBACK_2(HelloWorld::battleCastEvent, this));
+    _sioClient->on("battleExec", CC_CALLBACK_2(HelloWorld::battleExecEvent, this));
 }
 
 void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
@@ -358,16 +358,76 @@ void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
     
 }
 
-void HelloWorld::echotest(SIOClient *client, const std::string& data) {
-    log("だめーじ:xxxxx");
-	//log("SocketIOTestLayer::echotest called with data: %s", data.c_str());
+
+void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
     
-	//std::stringstream s;
-	//s << client->getTag() << " received event echotest with data: " << data.c_str();
+    //cocos2d-xでJSONを使う http://nirasan.hatenablog.com/entry/2013/10/24/232905
+	log("Att OVER【battleExecEvent】: %s", data.c_str());
     
-	//_sioClientStatus->setString(s.str().c_str());
+    std::string err;
+    picojson::value val;
+    
+    picojson::parse(val, data.begin(), data.end(),&err );
+    
+    
+    //cocos2d: きゃすと【battleCastEvent】: {"name":"battleExec","args":["{\"name\":\"マルチウェイ\",\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0,\"value\":880}"]}
+    
+    // 一番外側のobjectの取得
+    picojson::object& o = val.get<picojson::object>();
+    
+    // bool値の取得
+    //bool b1 = o["bool1"].get<bool>();
+    
+    // double値の取得
+    //double d1 = o["castTime"].get<double>();
+    
+    // string値の取得
+    std::string& s1 = o["name"].get<std::string>();
+    
+    
+    // array値の取得
+    picojson::array& a1 = o["args"].get<picojson::array>();
+    // arrayの中の値をループで取得
+    std::string* s2 ;
+    for (picojson::array::iterator i = a1.begin(); i != a1.end(); i++) {
+        s2 = &i->get<std::string>();
+    }
+    
+    picojson::value val2;
+    picojson::parse(val2, s2->begin(), s2->end(),&err );
+    // 一番外側のobjectの取得
+    picojson::object& o2 = val2.get<picojson::object>();
+    // double attribute = o2["attribute"].get<double>();
+    //double castId = o2["castId"].get<double>();
+    
+    
+    nameExec = o2["name"].get<std::string>();
+    targetExec = o2["target"].get<double>();
+    targetGroupExec = o2["targetGroup"].get<double>();
+    userExec = o2["user"].get<double>();
+    userGroupExec = o2["userGroup"].get<double>();
+    valueExec = o2["value"].get<double>();
+    
+    
+    // Skillをキャストする
+    
+    // キャラの動作を追加する
+    
+    
+    
+    
+    
+    log("###########: %s", nameExec.c_str());
+    log("###########: %f", targetExec);
+    log("###########: %f", targetGroupExec);
+    log("###########: %f", userExec);
+    log("###########: %f", userGroupExec);
+    log("###########: %f", valueExec);
+    
     
 }
+
+
 
 void HelloWorld::setCoolDownEffect(Node *node,Point position)
 {
@@ -375,7 +435,7 @@ void HelloWorld::setCoolDownEffect(Node *node,Point position)
     if ( pt != NULL )
     {
         float mPercentage = 100;    // 定义CD的显示百分比
-        float cd_Time = 5.0f;      // 定义CD的时间
+        float cd_Time = 8.0f;      // 定义CD的时间
         pt->setPercentage(mPercentage);                          // 设置进度条最大百分比
         pt->setPosition(position);   // 设置CD图样的位置
         pt->setType(ProgressTimer::Type::RADIAL);                 // 设置进度条动画类型

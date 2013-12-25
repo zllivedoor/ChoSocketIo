@@ -43,7 +43,7 @@ public:
     network::SIOClient *_sioClient, *_sioEndpoint;
     
     void battleCastEvent(network::SIOClient *client, const std::string& data);
-    
+    void battleExecEvent(network::SIOClient *client, const std::string& data);
 	void echotest(network::SIOClient *client, const std::string& data);
     void nodeServerCon();
     
@@ -76,6 +76,13 @@ private:
     double user = 0;
     double userGroup = 0;
     
+    
+    std::string nameExec = "";
+    double targetExec = 0;
+    double targetGroupExec = 0;
+    double userExec = 0;
+    double userGroupExec = 0;
+    double valueExec = 0;
     
     
 };
