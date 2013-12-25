@@ -12,6 +12,10 @@
 #include "cocostudio/CocoStudio.h"
 #include "gui/CocosGUI.h"
 
+#include <stdio.h>      /* puts, printf */
+#include <time.h>
+
+
 using namespace cocostudio;
 using namespace gui;
 
@@ -38,16 +42,24 @@ public:
     virtual void onError(network::SIOClient* client, const std::string& data);
     network::SIOClient *_sioClient, *_sioEndpoint;
     
-    void testevent(network::SIOClient *client, const std::string& data);
+    void battleCastEvent(network::SIOClient *client, const std::string& data);
+    
 	void echotest(network::SIOClient *client, const std::string& data);
     void nodeServerCon();
     
  
     // a selector callback
     void menuCloseCallback(Object* pSender);
-    void menuAttackCallback(cocos2d::Object *sender,TouchEventType type, int skill_id)
-
+    void menuAttackCallback(cocos2d::Object *sender,TouchEventType type);
+    
+    void setCoolDownEffect(Node *node,Point position);
+    
+    void skillCoolDownCallBack(CCNode* node);
+    
 private:
+    UILayout* ui_targetStatus;
+    
+    
     UILayout* ui_seq_1;
     UILayout* ui_seq_2;
     UILayout* ui_seq_3;
@@ -55,6 +67,16 @@ private:
     UILayout* ui_seq_5;
     UILayout* ui_seq_6;
     UILayout* ui_seq_start;
+    
+    
+    
+    double castTime = 0;
+    double target = 0;
+    double targetGroup = 0;
+    double user = 0;
+    double userGroup = 0;
+    
+    
     
 };
 

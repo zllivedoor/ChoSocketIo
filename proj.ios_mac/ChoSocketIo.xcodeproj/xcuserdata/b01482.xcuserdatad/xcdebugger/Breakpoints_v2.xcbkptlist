@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/HelloWorldScene.cpp"
-            timestampString = "409626391.362377"
+            timestampString = "409650576.62505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "262"
-            endingLineNumber = "262">
+            startingLineNumber = "285"
+            endingLineNumber = "285">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -72,11 +72,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/HelloWorldScene.cpp"
-            timestampString = "409626391.362377"
+            timestampString = "409650576.62505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "HelloWorld::onError(network::SIOClient* client, const std::string&amp; data)"
             landmarkType = "5">
          </BreakpointContent>
@@ -88,41 +88,41 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/HelloWorldScene.cpp"
-            timestampString = "409626391.362377"
+            timestampString = "409650576.62505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "279"
-            endingLineNumber = "279"
-            landmarkName = "HelloWorld::testevent(SIOClient *client, const std::string&amp; data)"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "HelloWorld::battleCastEvent(SIOClient *client, const std::string&amp; data)"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "HelloWorld::testevent(network::SIOClient*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
+                  symbolName = "HelloWorld::battleCastEvent(network::SIOClient*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
                   moduleName = "ChoSocketIo iOS"
                   urlString = "file:///Users/b01482/workspace/cocos2d-x/cocos2d-x-3.0alpha1/projects/ChoSocketIo/Classes/HelloWorldScene.cpp"
-                  timestampString = "409556994.303712"
+                  timestampString = "409650577.168157"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "232"
-                  endingLineNumber = "232"
-                  offsetFromSymbolStart = "45">
+                  startingLineNumber = "302"
+                  endingLineNumber = "302"
+                  offsetFromSymbolStart = "51">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "HelloWorld::testevent(network::SIOClient*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
+                  symbolName = "HelloWorld::battleCastEvent(network::SIOClient*, std::__1::basic_string&lt;char, std::__1::char_traits&lt;char&gt;, std::__1::allocator&lt;char&gt; &gt; const&amp;)"
                   moduleName = "ChoSocketIo iOS"
                   urlString = "file:///Users/b01482/workspace/cocos2d-x/cocos2d-x-3.0alpha1/projects/ChoSocketIo/Classes/HelloWorldScene.cpp"
-                  timestampString = "409556994.304018"
+                  timestampString = "409650577.16835"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "232"
-                  endingLineNumber = "232"
-                  offsetFromSymbolStart = "284">
+                  startingLineNumber = "302"
+                  endingLineNumber = "302"
+                  offsetFromSymbolStart = "296">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -134,11 +134,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/HelloWorldScene.cpp"
-            timestampString = "409626391.362377"
+            timestampString = "409635734.948046"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
             landmarkName = "HelloWorld::init()"
             landmarkType = "5">
          </BreakpointContent>
@@ -150,12 +150,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../Classes/HelloWorldScene.cpp"
-            timestampString = "409626391.362377"
+            timestampString = "409650576.62505"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
-            landmarkName = "HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type, int skill_id)"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Classes/HelloWorldScene.cpp"
+            timestampString = "409650825.463075"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
+            landmarkName = "HelloWorld::setCoolDownEffect(Node *node,Point position)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

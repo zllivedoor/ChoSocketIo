@@ -110,38 +110,29 @@ bool HelloWorld::init()
     this->addChild(sprite, 0);
     */
     
-    //设置为单点响应
-    setTouchMode(Touch::DispatchMode::ALL_AT_ONCE);
+    
+    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     
-    // 加载场景资源
-    /*
-    UILayer* uiLayer = UILayer::create();
-    auto myLayout = cocostudio::GUIReader::shareReader()->widgetFromJsonFile("SkillMenu_1.json"); //alpha1中使用
-    myLayout->getChildByTag(3)->addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
-
-    uiLayer->addWidget(myLayout);
-    */
-    
+    // CocoStudio　の資源をついかする
     auto node = SceneReader::getInstance()->createNodeWithSceneFile("FightScene.json");
     if(node)
     {
-       
-        //node->addChild(uiLayer, 100);
         this->addChild(node);
     }
-   
-    /*
-    /////////////////////////////////
-    auto child = node->getChildByTag(10014);
-    auto reader = (ComRender*)child->getComponent("GUIComponent");
-    auto layer = (UILayer*)reader->getNode();
-    m_layout = (UILayout*)layer->getWidgetByName("ui_hp");
-    //m_layout->UIWidget::setAnchorPoint(Point(0,1));
-    m_layout->UIWidget::setScaleX(0.5);// remainHP/maxHP をここに設定します。
-    */
+    
     
     /////////////////////////////////
+    // Target Status情報
+    auto targetStatus = node->getChildByTag(10014);
+    auto ts_reader = (ComRender*)targetStatus->getComponent("GUIComponent");
+    auto ts_layer = (UILayer*)ts_reader->getNode();
+    ui_targetStatus = (UILayout*)ts_layer->getWidgetByName("ui_hp");
+    ui_targetStatus->UIWidget::setScaleX(0.5);// remainHP/maxHP をここに設定します。
+    
+    
+    /////////////////////////////////
+    // Skill メニュー
     auto child = node->getChildByTag(10015);
     auto reader = (ComRender*)child->getComponent("GUIComponent");
     auto layer = (UILayer*)reader->getNode();
@@ -167,6 +158,13 @@ bool HelloWorld::init()
     ui_seq_start = (UILayout*)layer->getWidgetByName("ui_seq_start");
     ui_seq_start->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
     
+   
+    //setCoolDownEffect(layer,ui_seq_2->getPosition());
+    
+
+    
+
+   
     nodeServerCon();
     
     return true;
@@ -181,14 +179,14 @@ void HelloWorld::nodeServerCon()
     //僕のサーバー
    // _sioClient = SocketIO::connect(*this, "ws://10.13.197.156:8080");
     
-    _sioClient->on("battleCast", CC_CALLBACK_2(HelloWorld::testevent, this));
+    _sioClient->on("battleCast", CC_CALLBACK_2(HelloWorld::battleCastEvent, this));
+    _sioClient->on("battleExec", CC_CALLBACK_2(HelloWorld::battleCastEvent, this));
 }
 
-void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type, int skill_id)
+void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
 {
-    
-    
-    std::string args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+    std::string args = "";
+ 
     
     if (type == TOUCH_EVENT_BEGAN)
     {
@@ -200,6 +198,31 @@ void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type,
     }
     if (type == TOUCH_EVENT_ENDED)
     {
+        if(sender->isEqual(ui_seq_1)){
+            setCoolDownEffect(this,ui_seq_1->getWorldPosition());
+            args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+        }else if(sender->isEqual(ui_seq_2)){
+            setCoolDownEffect(this,ui_seq_2->getWorldPosition());
+            args = "{\"sequence\":[{\"action\":1,\"seqId\":2},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+        }else if(sender->isEqual(ui_seq_3)){
+            setCoolDownEffect(this,ui_seq_3->getWorldPosition());
+            args = "{\"sequence\":[{\"action\":1,\"seqId\":3},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+        }else if(sender->isEqual(ui_seq_4)){
+            setCoolDownEffect(this,ui_seq_4->getWorldPosition());
+            args = "{\"sequence\":[{\"action\":1,\"seqId\":4},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+        }else if(sender->isEqual(ui_seq_5)){
+            setCoolDownEffect(this,ui_seq_5->getWorldPosition());
+            args = "{\"sequence\":[{\"action\":1,\"seqId\":5},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+        }else if(sender->isEqual(ui_seq_6)){
+            setCoolDownEffect(this,ui_seq_6->getWorldPosition());
+            args = "{\"sequence\":[{\"action\":1,\"seqId\":6},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+        }else if(sender->isEqual(ui_seq_start)){
+            
+            setCoolDownEffect(this,ui_seq_start->getWorldPosition());
+            args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+            
+        }
+        
         if(_sioClient != NULL) _sioClient->emit("battleAction",args);
     }
         
@@ -273,10 +296,10 @@ void HelloWorld::onError(network::SIOClient* client, const std::string& data)
 }
 
 //test event callback handlers, these will be registered with socket.io
-void HelloWorld::testevent(SIOClient *client, const std::string& data) {
+void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
     
     //cocos2d-xでJSONを使う http://nirasan.hatenablog.com/entry/2013/10/24/232905
-	log("きゃすと: %s", data.c_str());
+	log("きゃすと【battleCastEvent】: %s", data.c_str());
     std::string err;
     picojson::value val;
     
@@ -311,11 +334,18 @@ void HelloWorld::testevent(SIOClient *client, const std::string& data) {
     picojson::object& o2 = val2.get<picojson::object>();
    // double attribute = o2["attribute"].get<double>();
     //double castId = o2["castId"].get<double>();
-    double castTime = o2["castTime"].get<double>();
-    double target = o2["target"].get<double>();
-    double targetGroup = o2["targetGroup"].get<double>();
-    double user = o2["user"].get<double>();
-    double userGroup = o2["userGroup"].get<double>();
+    castTime = o2["castTime"].get<double>();
+    target = o2["target"].get<double>();
+    targetGroup = o2["targetGroup"].get<double>();
+    user = o2["user"].get<double>();
+    userGroup = o2["userGroup"].get<double>();
+    
+    
+    
+    // Skillをキャストする
+    
+    // キャラの動作を追加する
+    
     
     //log("###########: %f", attribute);
    // log("###########: %f", castId);
@@ -338,5 +368,51 @@ void HelloWorld::echotest(SIOClient *client, const std::string& data) {
 	//_sioClientStatus->setString(s.str().c_str());
     
 }
+
+void HelloWorld::setCoolDownEffect(Node *node,Point position)
+{
+    ProgressTimer* pt = ProgressTimer::create( Sprite::create("ui/SkillMenu_1/ui_seq_timer.png") );
+    if ( pt != NULL )
+    {
+        float mPercentage = 100;    // 定义CD的显示百分比
+        float cd_Time = 5.0f;      // 定义CD的时间
+        pt->setPercentage(mPercentage);                          // 设置进度条最大百分比
+        pt->setPosition(position);   // 设置CD图样的位置
+        pt->setType(ProgressTimer::Type::RADIAL);                 // 设置进度条动画类型
+        pt->setOpacity(100);
+        
+        
+        node->addChild(pt,4);
+       
+        
+        ui_seq_1->setTouchEnabled(false);
+        
+        ProgressFromTo *fromto = ProgressFromTo::create(cd_Time, mPercentage, 0);  // 设定CD时间与要到达的百分比
+        
+       // pt->runAction(fromto);                                       // 给进度条加上动画条件
+        
+        
+        CallFunc* action_callback = CallFuncN::create(this, callfuncN_selector(HelloWorld::skillCoolDownCallBack));
+        pt->runAction(CCSequence::create(fromto, action_callback, NULL));
+        
+        
+    }
+}
+
+void HelloWorld::skillCoolDownCallBack(CCNode* node)
+{
+    // 设置蒙板不可见
+    //mStencil->setVisible(false);
+    
+    // 进度条技能不可见
+    //mProgressTimer->setVisible(false);
+    
+    // 按钮置为可用
+    ui_seq_1->setTouchEnabled(true);
+}
+
+
+
+
 
 
