@@ -199,26 +199,26 @@ void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
     if (type == TOUCH_EVENT_ENDED)
     {
         if(sender->isEqual(ui_seq_1)){
-            setCoolDownEffect(this,ui_seq_1->getWorldPosition());
+            setCoolDownEffect(ui_seq_1);
             args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
         }else if(sender->isEqual(ui_seq_2)){
-            setCoolDownEffect(this,ui_seq_2->getWorldPosition());
+            setCoolDownEffect(ui_seq_2);
             args = "{\"sequence\":[{\"action\":1,\"seqId\":2},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
         }else if(sender->isEqual(ui_seq_3)){
-            setCoolDownEffect(this,ui_seq_3->getWorldPosition());
+            setCoolDownEffect(ui_seq_3);
             args = "{\"sequence\":[{\"action\":1,\"seqId\":3},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
         }else if(sender->isEqual(ui_seq_4)){
-            setCoolDownEffect(this,ui_seq_4->getWorldPosition());
+            setCoolDownEffect(ui_seq_4);
             args = "{\"sequence\":[{\"action\":1,\"seqId\":4},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
         }else if(sender->isEqual(ui_seq_5)){
-            setCoolDownEffect(this,ui_seq_5->getWorldPosition());
+            setCoolDownEffect(ui_seq_5);
             args = "{\"sequence\":[{\"action\":1,\"seqId\":5},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
         }else if(sender->isEqual(ui_seq_6)){
-            setCoolDownEffect(this,ui_seq_6->getWorldPosition());
+            setCoolDownEffect(ui_seq_6);
             args = "{\"sequence\":[{\"action\":1,\"seqId\":6},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
         }else if(sender->isEqual(ui_seq_start)){
             
-            setCoolDownEffect(this,ui_seq_start->getWorldPosition());
+            setCoolDownEffect(ui_seq_start);
             args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
             
         }
@@ -429,7 +429,7 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
 
 
 
-void HelloWorld::setCoolDownEffect(Node *node,Point position)
+void HelloWorld::setCoolDownEffect(UILayout* layout)
 {
     ProgressTimer* pt = ProgressTimer::create( Sprite::create("ui/SkillMenu_1/ui_seq_timer.png") );
     if ( pt != NULL )
@@ -437,29 +437,30 @@ void HelloWorld::setCoolDownEffect(Node *node,Point position)
         float mPercentage = 100;    // 定义CD的显示百分比
         float cd_Time = 8.0f;      // 定义CD的时间
         pt->setPercentage(mPercentage);                          // 设置进度条最大百分比
-        pt->setPosition(position);   // 设置CD图样的位置
+        pt->setPosition(layout->getWorldPosition());   // 设置CD图样的位置
         pt->setType(ProgressTimer::Type::RADIAL);                 // 设置进度条动画类型
         pt->setOpacity(100);
         
         
-        node->addChild(pt,4);
+        this->addChild(pt,4);
        
         
-        ui_seq_1->setTouchEnabled(false);
         
         ProgressFromTo *fromto = ProgressFromTo::create(cd_Time, mPercentage, 0);  // 设定CD时间与要到达的百分比
         
        // pt->runAction(fromto);                                       // 给进度条加上动画条件
         
-        
-        CallFunc* action_callback = CallFuncN::create(this, callfuncN_selector(HelloWorld::skillCoolDownCallBack));
-        pt->runAction(CCSequence::create(fromto, action_callback, NULL));
+        layout->setTouchEnabled(false);
+      
+        pt->runAction(CCSequence::create(fromto, CallFunc::create([=]() {
+           layout->setTouchEnabled(true);
+        }), NULL));
         
         
     }
 }
 
-void HelloWorld::skillCoolDownCallBack(CCNode* node)
+void HelloWorld::skillCoolDownCallBack(UILayout* layout)
 {
     // 设置蒙板不可见
     //mStencil->setVisible(false);
@@ -468,7 +469,7 @@ void HelloWorld::skillCoolDownCallBack(CCNode* node)
     //mProgressTimer->setVisible(false);
     
     // 按钮置为可用
-    ui_seq_1->setTouchEnabled(true);
+    layout->setTouchEnabled(true);
 }
 
 

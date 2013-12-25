@@ -171,7 +171,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "435"
             endingLineNumber = "435"
-            landmarkName = "HelloWorld::setCoolDownEffect(Node *node,Point position)"
+            landmarkName = "HelloWorld::setCoolDownEffect(UILayout* layout)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -52,9 +52,9 @@ public:
     void menuCloseCallback(Object* pSender);
     void menuAttackCallback(cocos2d::Object *sender,TouchEventType type);
     
-    void setCoolDownEffect(Node *node,Point position);
+    void setCoolDownEffect(UILayout* layout);
     
-    void skillCoolDownCallBack(CCNode* node);
+    void skillCoolDownCallBack(UILayout* layout);
     
 private:
     UILayout* ui_targetStatus;
