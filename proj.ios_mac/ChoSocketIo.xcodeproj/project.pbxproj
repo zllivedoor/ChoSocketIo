@@ -59,33 +59,13 @@
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
-		C8BD14561869347000DDAC1B /* monster.ExportJson in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14341869347000DDAC1B /* monster.ExportJson */; };
-		C8BD14571869347000DDAC1B /* monster0.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14351869347000DDAC1B /* monster0.plist */; };
-		C8BD14581869347000DDAC1B /* monster0.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14361869347000DDAC1B /* monster0.png */; };
-		C8BD14591869347000DDAC1B /* girl.ExportJson in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14381869347000DDAC1B /* girl.ExportJson */; };
-		C8BD145A1869347000DDAC1B /* girl0.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14391869347000DDAC1B /* girl0.plist */; };
-		C8BD145B1869347000DDAC1B /* girl0.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD143A1869347000DDAC1B /* girl0.png */; };
-		C8BD145C1869347000DDAC1B /* FightScene.json in Resources */ = {isa = PBXBuildFile; fileRef = C8BD143B1869347000DDAC1B /* FightScene.json */; };
-		C8BD145D1869347000DDAC1B /* bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD143D1869347000DDAC1B /* bg1.png */; };
-		C8BD145E1869347000DDAC1B /* 1-buff.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8BD143F1869347000DDAC1B /* 1-buff.plist */; };
-		C8BD145F1869347000DDAC1B /* 1-buff.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14401869347000DDAC1B /* 1-buff.png */; };
-		C8BD14601869347000DDAC1B /* arena.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14421869347000DDAC1B /* arena.mp3 */; };
-		C8BD14611869347000DDAC1B /* DemoHead_UI.json in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14451869347000DDAC1B /* DemoHead_UI.json */; };
-		C8BD14621869347000DDAC1B /* ui_head_img.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14461869347000DDAC1B /* ui_head_img.png */; };
-		C8BD14631869347000DDAC1B /* ui_hp.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14471869347000DDAC1B /* ui_hp.png */; };
-		C8BD14641869347000DDAC1B /* ui_status_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14481869347000DDAC1B /* ui_status_bg.png */; };
-		C8BD14651869347000DDAC1B /* FightScene0.plist in Resources */ = {isa = PBXBuildFile; fileRef = C8BD144A1869347000DDAC1B /* FightScene0.plist */; };
-		C8BD14661869347000DDAC1B /* FightScene0.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD144B1869347000DDAC1B /* FightScene0.png */; };
-		C8BD14671869347000DDAC1B /* FightScene_1.ExportJson in Resources */ = {isa = PBXBuildFile; fileRef = C8BD144C1869347000DDAC1B /* FightScene_1.ExportJson */; };
-		C8BD148A1869362000DDAC1B /* SkillMenu_1.json in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14821869362000DDAC1B /* SkillMenu_1.json */; };
-		C8BD148B1869362000DDAC1B /* ui_seq_1.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14831869362000DDAC1B /* ui_seq_1.png */; };
-		C8BD148C1869362000DDAC1B /* ui_seq_2.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14841869362000DDAC1B /* ui_seq_2.png */; };
-		C8BD148D1869362000DDAC1B /* ui_seq_3.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14851869362000DDAC1B /* ui_seq_3.png */; };
-		C8BD148E1869362000DDAC1B /* ui_seq_4.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14861869362000DDAC1B /* ui_seq_4.png */; };
-		C8BD148F1869362000DDAC1B /* ui_seq_5.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14871869362000DDAC1B /* ui_seq_5.png */; };
-		C8BD14901869362000DDAC1B /* ui_seq_6.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14881869362000DDAC1B /* ui_seq_6.png */; };
-		C8BD14911869362000DDAC1B /* ui_start.png in Resources */ = {isa = PBXBuildFile; fileRef = C8BD14891869362000DDAC1B /* ui_start.png */; };
 		C8CDA9ED1861958900EE18AE /* SocketIOTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C8CDA9EB1861958900EE18AE /* SocketIOTest.cpp */; };
+		C8CF8D091869A21100411279 /* ani in Resources */ = {isa = PBXBuildFile; fileRef = C8CF8D041869A21100411279 /* ani */; };
+		C8CF8D0A1869A21100411279 /* img in Resources */ = {isa = PBXBuildFile; fileRef = C8CF8D051869A21100411279 /* img */; };
+		C8CF8D0B1869A21100411279 /* particle in Resources */ = {isa = PBXBuildFile; fileRef = C8CF8D061869A21100411279 /* particle */; };
+		C8CF8D0C1869A21100411279 /* sound in Resources */ = {isa = PBXBuildFile; fileRef = C8CF8D071869A21100411279 /* sound */; };
+		C8CF8D0D1869A21100411279 /* ui in Resources */ = {isa = PBXBuildFile; fileRef = C8CF8D081869A21100411279 /* ui */; };
+		C8CF8D0F1869A21800411279 /* FightScene.json in Resources */ = {isa = PBXBuildFile; fileRef = C8CF8D0E1869A21800411279 /* FightScene.json */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -309,35 +289,15 @@
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		C8BD14341869347000DDAC1B /* monster.ExportJson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = monster.ExportJson; sourceTree = "<group>"; };
-		C8BD14351869347000DDAC1B /* monster0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = monster0.plist; sourceTree = "<group>"; };
-		C8BD14361869347000DDAC1B /* monster0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monster0.png; sourceTree = "<group>"; };
-		C8BD14381869347000DDAC1B /* girl.ExportJson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = girl.ExportJson; sourceTree = "<group>"; };
-		C8BD14391869347000DDAC1B /* girl0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = girl0.plist; sourceTree = "<group>"; };
-		C8BD143A1869347000DDAC1B /* girl0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl0.png; sourceTree = "<group>"; };
-		C8BD143B1869347000DDAC1B /* FightScene.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FightScene.json; sourceTree = "<group>"; };
-		C8BD143D1869347000DDAC1B /* bg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg1.png; sourceTree = "<group>"; };
-		C8BD143F1869347000DDAC1B /* 1-buff.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "1-buff.plist"; sourceTree = "<group>"; };
-		C8BD14401869347000DDAC1B /* 1-buff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1-buff.png"; sourceTree = "<group>"; };
-		C8BD14421869347000DDAC1B /* arena.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = arena.mp3; sourceTree = "<group>"; };
-		C8BD14451869347000DDAC1B /* DemoHead_UI.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DemoHead_UI.json; sourceTree = "<group>"; };
-		C8BD14461869347000DDAC1B /* ui_head_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_head_img.png; sourceTree = "<group>"; };
-		C8BD14471869347000DDAC1B /* ui_hp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_hp.png; sourceTree = "<group>"; };
-		C8BD14481869347000DDAC1B /* ui_status_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_status_bg.png; sourceTree = "<group>"; };
-		C8BD144A1869347000DDAC1B /* FightScene0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FightScene0.plist; sourceTree = "<group>"; };
-		C8BD144B1869347000DDAC1B /* FightScene0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FightScene0.png; sourceTree = "<group>"; };
-		C8BD144C1869347000DDAC1B /* FightScene_1.ExportJson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FightScene_1.ExportJson; sourceTree = "<group>"; };
-		C8BD14821869362000DDAC1B /* SkillMenu_1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SkillMenu_1.json; sourceTree = "<group>"; };
-		C8BD14831869362000DDAC1B /* ui_seq_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_seq_1.png; sourceTree = "<group>"; };
-		C8BD14841869362000DDAC1B /* ui_seq_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_seq_2.png; sourceTree = "<group>"; };
-		C8BD14851869362000DDAC1B /* ui_seq_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_seq_3.png; sourceTree = "<group>"; };
-		C8BD14861869362000DDAC1B /* ui_seq_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_seq_4.png; sourceTree = "<group>"; };
-		C8BD14871869362000DDAC1B /* ui_seq_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_seq_5.png; sourceTree = "<group>"; };
-		C8BD14881869362000DDAC1B /* ui_seq_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_seq_6.png; sourceTree = "<group>"; };
-		C8BD14891869362000DDAC1B /* ui_start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ui_start.png; sourceTree = "<group>"; };
 		C8CDA9EB1861958900EE18AE /* SocketIOTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SocketIOTest.cpp; path = ../Classes/SocketIOTest.cpp; sourceTree = "<group>"; };
 		C8CDA9EC1861958900EE18AE /* SocketIOTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketIOTest.h; path = ../Classes/SocketIOTest.h; sourceTree = "<group>"; };
 		C8CDA9F21862FD0700EE18AE /* picojson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
+		C8CF8D041869A21100411279 /* ani */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ani; path = ../Resources/ani; sourceTree = "<group>"; };
+		C8CF8D051869A21100411279 /* img */ = {isa = PBXFileReference; lastKnownFileType = folder; name = img; path = ../Resources/img; sourceTree = "<group>"; };
+		C8CF8D061869A21100411279 /* particle */ = {isa = PBXFileReference; lastKnownFileType = folder; name = particle; path = ../Resources/particle; sourceTree = "<group>"; };
+		C8CF8D071869A21100411279 /* sound */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sound; path = ../Resources/sound; sourceTree = "<group>"; };
+		C8CF8D081869A21100411279 /* ui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ui; path = ../Resources/ui; sourceTree = "<group>"; };
+		C8CF8D0E1869A21800411279 /* FightScene.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = FightScene.json; path = ../Resources/FightScene.json; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -456,7 +416,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				C8BD14311869347000DDAC1B /* Resources */,
+				C8CF8D031869A20600411279 /* Resource */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
 				15AA9C4015B7EC450033D6C2 /* Classes */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -534,118 +494,17 @@
 			path = ios;
 			sourceTree = SOURCE_ROOT;
 		};
-		C8BD14311869347000DDAC1B /* Resources */ = {
+		C8CF8D031869A20600411279 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				C8BD14321869347000DDAC1B /* ani */,
-				C8BD143B1869347000DDAC1B /* FightScene.json */,
-				C8BD143C1869347000DDAC1B /* img */,
-				C8BD143E1869347000DDAC1B /* particle */,
-				C8BD14411869347000DDAC1B /* sound */,
-				C8BD14431869347000DDAC1B /* ui */,
+				C8CF8D0E1869A21800411279 /* FightScene.json */,
+				C8CF8D041869A21100411279 /* ani */,
+				C8CF8D051869A21100411279 /* img */,
+				C8CF8D061869A21100411279 /* particle */,
+				C8CF8D071869A21100411279 /* sound */,
+				C8CF8D081869A21100411279 /* ui */,
 			);
-			name = Resources;
-			path = ../Resources;
-			sourceTree = "<group>";
-		};
-		C8BD14321869347000DDAC1B /* ani */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD14331869347000DDAC1B /* enemy */,
-				C8BD14371869347000DDAC1B /* hero */,
-			);
-			path = ani;
-			sourceTree = "<group>";
-		};
-		C8BD14331869347000DDAC1B /* enemy */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD14341869347000DDAC1B /* monster.ExportJson */,
-				C8BD14351869347000DDAC1B /* monster0.plist */,
-				C8BD14361869347000DDAC1B /* monster0.png */,
-			);
-			path = enemy;
-			sourceTree = "<group>";
-		};
-		C8BD14371869347000DDAC1B /* hero */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD14381869347000DDAC1B /* girl.ExportJson */,
-				C8BD14391869347000DDAC1B /* girl0.plist */,
-				C8BD143A1869347000DDAC1B /* girl0.png */,
-			);
-			path = hero;
-			sourceTree = "<group>";
-		};
-		C8BD143C1869347000DDAC1B /* img */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD143D1869347000DDAC1B /* bg1.png */,
-			);
-			path = img;
-			sourceTree = "<group>";
-		};
-		C8BD143E1869347000DDAC1B /* particle */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD143F1869347000DDAC1B /* 1-buff.plist */,
-				C8BD14401869347000DDAC1B /* 1-buff.png */,
-			);
-			path = particle;
-			sourceTree = "<group>";
-		};
-		C8BD14411869347000DDAC1B /* sound */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD14421869347000DDAC1B /* arena.mp3 */,
-			);
-			path = sound;
-			sourceTree = "<group>";
-		};
-		C8BD14431869347000DDAC1B /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD14811869362000DDAC1B /* SkillMenu_1 */,
-				C8BD14441869347000DDAC1B /* DemoHead_UI */,
-				C8BD14491869347000DDAC1B /* FightScene_1 */,
-			);
-			path = ui;
-			sourceTree = "<group>";
-		};
-		C8BD14441869347000DDAC1B /* DemoHead_UI */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD14451869347000DDAC1B /* DemoHead_UI.json */,
-				C8BD14461869347000DDAC1B /* ui_head_img.png */,
-				C8BD14471869347000DDAC1B /* ui_hp.png */,
-				C8BD14481869347000DDAC1B /* ui_status_bg.png */,
-			);
-			path = DemoHead_UI;
-			sourceTree = "<group>";
-		};
-		C8BD14491869347000DDAC1B /* FightScene_1 */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD144A1869347000DDAC1B /* FightScene0.plist */,
-				C8BD144B1869347000DDAC1B /* FightScene0.png */,
-				C8BD144C1869347000DDAC1B /* FightScene_1.ExportJson */,
-			);
-			path = FightScene_1;
-			sourceTree = "<group>";
-		};
-		C8BD14811869362000DDAC1B /* SkillMenu_1 */ = {
-			isa = PBXGroup;
-			children = (
-				C8BD14821869362000DDAC1B /* SkillMenu_1.json */,
-				C8BD14831869362000DDAC1B /* ui_seq_1.png */,
-				C8BD14841869362000DDAC1B /* ui_seq_2.png */,
-				C8BD14851869362000DDAC1B /* ui_seq_3.png */,
-				C8BD14861869362000DDAC1B /* ui_seq_4.png */,
-				C8BD14871869362000DDAC1B /* ui_seq_5.png */,
-				C8BD14881869362000DDAC1B /* ui_seq_6.png */,
-				C8BD14891869362000DDAC1B /* ui_start.png */,
-			);
-			path = SkillMenu_1;
+			name = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -840,47 +699,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8BD14641869347000DDAC1B /* ui_status_bg.png in Resources */,
-				C8BD14611869347000DDAC1B /* DemoHead_UI.json in Resources */,
-				C8BD14571869347000DDAC1B /* monster0.plist in Resources */,
+				C8CF8D0A1869A21100411279 /* img in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
-				C8BD145E1869347000DDAC1B /* 1-buff.plist in Resources */,
+				C8CF8D0D1869A21100411279 /* ui in Resources */,
+				C8CF8D091869A21100411279 /* ani in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
-				C8BD148C1869362000DDAC1B /* ui_seq_2.png in Resources */,
-				C8BD145B1869347000DDAC1B /* girl0.png in Resources */,
-				C8BD148E1869362000DDAC1B /* ui_seq_4.png in Resources */,
-				C8BD14631869347000DDAC1B /* ui_hp.png in Resources */,
-				C8BD145F1869347000DDAC1B /* 1-buff.png in Resources */,
-				C8BD148D1869362000DDAC1B /* ui_seq_3.png in Resources */,
-				C8BD14581869347000DDAC1B /* monster0.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
-				C8BD14901869362000DDAC1B /* ui_seq_6.png in Resources */,
-				C8BD14561869347000DDAC1B /* monster.ExportJson in Resources */,
-				C8BD14621869347000DDAC1B /* ui_head_img.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
-				C8BD14671869347000DDAC1B /* FightScene_1.ExportJson in Resources */,
+				C8CF8D0B1869A21100411279 /* particle in Resources */,
+				C8CF8D0F1869A21800411279 /* FightScene.json in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
-				C8BD145D1869347000DDAC1B /* bg1.png in Resources */,
-				C8BD145C1869347000DDAC1B /* FightScene.json in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
-				C8BD148A1869362000DDAC1B /* SkillMenu_1.json in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
-				C8BD14661869347000DDAC1B /* FightScene0.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
-				C8BD14591869347000DDAC1B /* girl.ExportJson in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
-				C8BD148B1869362000DDAC1B /* ui_seq_1.png in Resources */,
-				C8BD148F1869362000DDAC1B /* ui_seq_5.png in Resources */,
-				C8BD14601869347000DDAC1B /* arena.mp3 in Resources */,
-				C8BD14651869347000DDAC1B /* FightScene0.plist in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
-				C8BD145A1869347000DDAC1B /* girl0.plist in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
-				C8BD14911869362000DDAC1B /* ui_start.png in Resources */,
+				C8CF8D0C1869A21100411279 /* sound in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -45,9 +45,16 @@ public:
  
     // a selector callback
     void menuCloseCallback(Object* pSender);
-    void menuAttackCallback(cocos2d::Object *sender);
+    void menuAttackCallback(cocos2d::Object *sender,TouchEventType type, int skill_id)
 
 private:
+    UILayout* ui_seq_1;
+    UILayout* ui_seq_2;
+    UILayout* ui_seq_3;
+    UILayout* ui_seq_4;
+    UILayout* ui_seq_5;
+    UILayout* ui_seq_6;
+    UILayout* ui_seq_start;
     
 };
 

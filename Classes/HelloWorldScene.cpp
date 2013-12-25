@@ -111,26 +111,61 @@ bool HelloWorld::init()
     */
     
     //设置为单点响应
-    setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
+    setTouchMode(Touch::DispatchMode::ALL_AT_ONCE);
     
     
     // 加载场景资源
-    
+    /*
     UILayer* uiLayer = UILayer::create();
     auto myLayout = cocostudio::GUIReader::shareReader()->widgetFromJsonFile("SkillMenu_1.json"); //alpha1中使用
     myLayout->getChildByTag(3)->addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
 
     uiLayer->addWidget(myLayout);
-   
+    */
     
     auto node = SceneReader::getInstance()->createNodeWithSceneFile("FightScene.json");
     if(node)
     {
        
-        node->addChild(uiLayer, 100);
+        //node->addChild(uiLayer, 100);
         this->addChild(node);
     }
    
+    /*
+    /////////////////////////////////
+    auto child = node->getChildByTag(10014);
+    auto reader = (ComRender*)child->getComponent("GUIComponent");
+    auto layer = (UILayer*)reader->getNode();
+    m_layout = (UILayout*)layer->getWidgetByName("ui_hp");
+    //m_layout->UIWidget::setAnchorPoint(Point(0,1));
+    m_layout->UIWidget::setScaleX(0.5);// remainHP/maxHP をここに設定します。
+    */
+    
+    /////////////////////////////////
+    auto child = node->getChildByTag(10015);
+    auto reader = (ComRender*)child->getComponent("GUIComponent");
+    auto layer = (UILayer*)reader->getNode();
+    
+    ui_seq_1 = (UILayout*)layer->getWidgetByName("ui_seq_1");
+    ui_seq_1->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
+    
+    ui_seq_2 = (UILayout*)layer->getWidgetByName("ui_seq_2");
+    ui_seq_2->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
+    
+    ui_seq_3 = (UILayout*)layer->getWidgetByName("ui_seq_3");
+    ui_seq_3->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
+    
+    ui_seq_4 = (UILayout*)layer->getWidgetByName("ui_seq_4");
+    ui_seq_4->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
+    
+    ui_seq_5 = (UILayout*)layer->getWidgetByName("ui_seq_5");
+    ui_seq_5->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
+    
+    ui_seq_6 = (UILayout*)layer->getWidgetByName("ui_seq_6");
+    ui_seq_6->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
+    
+    ui_seq_start = (UILayout*)layer->getWidgetByName("ui_seq_start");
+    ui_seq_start->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
     
     nodeServerCon();
     
@@ -141,21 +176,33 @@ bool HelloWorld::init()
 void HelloWorld::nodeServerCon()
 {
     //平井さんのサーバー
-    //_sioClient = SocketIO::connect(*this, "ws://10.13.165.59:3000");
+    _sioClient = SocketIO::connect(*this, "ws://10.13.165.59:3000");
     
     //僕のサーバー
-    _sioClient = SocketIO::connect(*this, "ws://10.13.197.156:8080");
+   // _sioClient = SocketIO::connect(*this, "ws://10.13.197.156:8080");
     
     _sioClient->on("battleCast", CC_CALLBACK_2(HelloWorld::testevent, this));
 }
 
-void HelloWorld::menuAttackCallback(cocos2d::Object *sender)
+void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type, int skill_id)
 {
     
-    std::string args = "{\"sequence\":[{\"action\":3,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":4,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"type\":1,\"typeSub\":0}";
     
-    if(_sioClient != NULL) _sioClient->emit("battleAction",args);
+    std::string args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
     
+    if (type == TOUCH_EVENT_BEGAN)
+    {
+       
+    }
+    if (type == TOUCH_EVENT_MOVED)
+    {
+        
+    }
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        if(_sioClient != NULL) _sioClient->emit("battleAction",args);
+    }
+        
 }
 
 
@@ -248,7 +295,7 @@ void HelloWorld::testevent(SIOClient *client, const std::string& data) {
     
     // string値の取得
     std::string& s1 = o["name"].get<std::string>();
-    
+  
     
     // array値の取得
     picojson::array& a1 = o["args"].get<picojson::array>();
@@ -262,19 +309,21 @@ void HelloWorld::testevent(SIOClient *client, const std::string& data) {
     picojson::parse(val2, s2->begin(), s2->end(),&err );
     // 一番外側のobjectの取得
     picojson::object& o2 = val2.get<picojson::object>();
-    double attribute = o2["attribute"].get<double>();
-    double castId = o2["castId"].get<double>();
+   // double attribute = o2["attribute"].get<double>();
+    //double castId = o2["castId"].get<double>();
     double castTime = o2["castTime"].get<double>();
     double target = o2["target"].get<double>();
     double targetGroup = o2["targetGroup"].get<double>();
     double user = o2["user"].get<double>();
+    double userGroup = o2["userGroup"].get<double>();
     
-    log("###########: %f", attribute);
-    log("###########: %f", castId);
+    //log("###########: %f", attribute);
+   // log("###########: %f", castId);
     log("###########: %f", castTime);
     log("###########: %f", target);
     log("###########: %f", targetGroup);
     log("###########: %f", user);
+    log("###########: %f", userGroup);
     
     
 }

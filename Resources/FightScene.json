@@ -50,8 +50,8 @@
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 751.66668701171875,
-      "y": 246.33340454101563,
+      "x": 506.66668701171875,
+      "y": 243.33340454101563,
       "zorder": 2,
       "gameobjects": [],
       "components": [
@@ -72,16 +72,44 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": null,
-      "canedit": true,
-      "objecttag": 10008,
+      "name": "bg1",
+      "canedit": false,
+      "objecttag": 10003,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
       "x": 479,
       "y": 324,
-      "zorder": 3,
+      "zorder": 1,
+      "gameobjects": [],
+      "components": [
+        {
+          "__type": "ComSpriteSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "CCSprite",
+          "name": "CCSprite",
+          "file": null,
+          "fileData": {
+            "path": "img/bg1.png",
+            "plistFile": null,
+            "resourceType": 0
+          }
+        }
+      ]
+    },
+    {
+      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
+      "classname": "CCNode",
+      "name": null,
+      "canedit": true,
+      "objecttag": 10014,
+      "rotation": 0,
+      "scalex": 1,
+      "scaley": 1,
+      "visible": 1,
+      "x": 476,
+      "y": 316,
+      "zorder": 1,
       "gameobjects": [],
       "components": [
         {
@@ -100,25 +128,25 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "bg1",
+      "name": null,
       "canedit": true,
-      "objecttag": 10003,
+      "objecttag": 10015,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 479,
-      "y": 324,
+      "x": 472,
+      "y": 183,
       "zorder": 1,
       "gameobjects": [],
       "components": [
         {
-          "__type": "ComSpriteSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "CCSprite",
-          "name": "CCSprite",
+          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
+          "classname": "GUIComponent",
+          "name": "GUIComponent",
           "file": null,
           "fileData": {
-            "path": "img/bg1.png",
+            "path": "ui/SkillMenu_1/SkillMenu_1.json",
             "plistFile": null,
             "resourceType": 0
           }
