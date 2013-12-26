@@ -1,4 +1,4 @@
-#include "HelloWorldScene.h"
+fd#include "HelloWorldScene.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -114,12 +114,34 @@ bool HelloWorld::init()
     setTouchMode(Touch::DispatchMode::ONE_BY_ONE);
     
     
+    /////////////////////////////////
     // CocoStudio　の資源をついかする
     auto node = SceneReader::getInstance()->createNodeWithSceneFile("FightScene.json");
     if(node)
     {
         this->addChild(node);
     }
+    
+    
+    /////////////////////////////////
+    // Join Room 画面
+    UILayer* loginLayer = UILayer::create();
+    auto loginLayout = GUIReader::shareReader()->widgetFromJsonFile("ui/DemoLogin/DemoLogin.json");
+    loginLayer->addWidget(loginLayout);
+    loginLayer->setPosition(Point(195 ,215));
+    loginLayer->setZOrder(10);
+    loginLayer->setTag(10010);
+    this->addChild(loginLayer);
+    
+    
+    auto joinRoom  = (UILayout*)loginLayer->getWidgetByName("Button_43");
+    joinRoom->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::joinRoomCallback));
+    
+    
+    
+    
+    
+    
     
     
     /////////////////////////////////
@@ -181,16 +203,38 @@ void HelloWorld::nodeServerCon()
     
     _sioClient->on("battleCast", CC_CALLBACK_2(HelloWorld::battleCastEvent, this));
     _sioClient->on("battleExec", CC_CALLBACK_2(HelloWorld::battleExecEvent, this));
+    _sioClient->on("battleStart", CC_CALLBACK_2(HelloWorld::battleStartEvent, this));
+}
+
+void HelloWorld::joinRoomCallback(cocos2d::Object *sender,TouchEventType type)
+{
+    std::string args = "";
+    
+    args="{\"join\":\"join\"}";
+   
+    if (type == TOUCH_EVENT_BEGAN){}
+    if (type == TOUCH_EVENT_MOVED){}
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        if(_sioClient != NULL) _sioClient->emit("join",args);
+    }
+    
 }
 
 void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
 {
     std::string args = "";
- 
     
     if (type == TOUCH_EVENT_BEGAN)
     {
-       
+        auto armature = (Armature*)getChildByTag(10005);
+        armature->getAnimation()->play("attack");
+        
+        
+        auto armatureB = (Armature*)getChildByTag(10006);
+        armatureB->getAnimation()->play("death");
+        
+        
     }
     if (type == TOUCH_EVENT_MOVED)
     {
@@ -425,6 +469,91 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
     log("###########: %f", valueExec);
     
     
+}
+
+
+
+void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
+    
+    //cocos2d-xでJSONを使う http://nirasan.hatenablog.com/entry/2013/10/24/232905
+	log("##########Join Room Over#########【battleStartEvent】: %s", data.c_str());
+    
+    std::string err;
+    picojson::value val;
+    
+    picojson::parse(val, data.begin(), data.end(),&err );
+    
+    
+    //{"name":"battleStart","args":["{\"room\":\"battleRoom2\",\"enemy\":3,\"user\":4}"]}
+
+    
+    // 一番外側のobjectの取得
+    picojson::object& o = val.get<picojson::object>();
+    
+    // bool値の取得
+    //bool b1 = o["bool1"].get<bool>();
+    
+    // double値の取得
+    //double d1 = o["castTime"].get<double>();
+    
+    // string値の取得
+    std::string& s1 = o["name"].get<std::string>();
+    
+    
+    // array値の取得
+    picojson::array& a1 = o["args"].get<picojson::array>();
+    // arrayの中の値をループで取得
+    std::string* s2 ;
+    for (picojson::array::iterator i = a1.begin(); i != a1.end(); i++) {
+        s2 = &i->get<std::string>();
+    }
+    
+    picojson::value val2;
+    picojson::parse(val2, s2->begin(), s2->end(),&err );
+    // 一番外側のobjectの取得
+    picojson::object& o2 = val2.get<picojson::object>();
+    // double attribute = o2["attribute"].get<double>();
+    //double castId = o2["castId"].get<double>();
+    
+    roomName  = o2["room"].get<std::string>();
+    roomEnemyId = o2["enemy"].get<double>();
+    roomUserId = o2["user"].get<double>();
+    
+    
+    // Join Room画面を非表示する
+    auto loginLayer = (UILayer*)getChildByTag(10010);
+    loginLayer->setVisible(false);
+
+    
+    // Playerを追加する
+    /////////////////////////////////
+    // PlayerA
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/hero/girl.ExportJson");
+    Armature* armaturePlayerA = Armature::create("girl");
+    armaturePlayerA->setTag(10005);
+    armaturePlayerA->setPosition(Point(195 ,215));
+    this->addChild(armaturePlayerA);
+    armaturePlayerA->setZOrder(3);
+    armaturePlayerA->getAnimation()->play("loading");
+    
+    // PlayerB
+    ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/enemy/monster.ExportJson");
+    Armature* armaturePlayerB = Armature::create("monster");
+    armaturePlayerB->setTag(10006);
+    armaturePlayerB->setPosition(Point(506 ,243));
+    this->addChild(armaturePlayerB);
+    armaturePlayerB->setZOrder(3);
+    armaturePlayerB->getAnimation()->play("loading");
+    
+    
+    
+    
+    
+    
+    log("###########: %s", roomName.c_str());
+    log("###########: %f", roomEnemyId);
+    log("###########: %f", roomUserId);
+
 }
 
 

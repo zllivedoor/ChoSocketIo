@@ -14,64 +14,6 @@
     {
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
-      "name": "hero",
-      "canedit": true,
-      "objecttag": 10005,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 195.66668701171875,
-      "y": 215.33335876464844,
-      "zorder": 2,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "CCArmature",
-          "name": "CCArmature",
-          "file": null,
-          "fileData": {
-            "path": "ani/hero/girl.ExportJson",
-            "plistFile": null,
-            "resourceType": 0
-          },
-          "selectedactionname": "loading"
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": "enemy",
-      "canedit": true,
-      "objecttag": 10006,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 506.66668701171875,
-      "y": 243.33340454101563,
-      "zorder": 2,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComArmatureAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "CCArmature",
-          "name": "CCArmature",
-          "file": null,
-          "fileData": {
-            "path": "ani/enemy/monster.ExportJson",
-            "plistFile": null,
-            "resourceType": 0
-          },
-          "selectedactionname": "loading"
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
       "name": "bg1",
       "canedit": false,
       "objecttag": 10003,

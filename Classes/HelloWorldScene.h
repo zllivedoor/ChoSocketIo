@@ -44,6 +44,8 @@ public:
     
     void battleCastEvent(network::SIOClient *client, const std::string& data);
     void battleExecEvent(network::SIOClient *client, const std::string& data);
+    void battleStartEvent(network::SIOClient *client, const std::string& data);
+    
 	void echotest(network::SIOClient *client, const std::string& data);
     void nodeServerCon();
     
@@ -51,6 +53,7 @@ public:
     // a selector callback
     void menuCloseCallback(Object* pSender);
     void menuAttackCallback(cocos2d::Object *sender,TouchEventType type);
+    void joinRoomCallback(cocos2d::Object *sender,TouchEventType type);
     
     void setCoolDownEffect(UILayout* layout);
     
@@ -84,6 +87,10 @@ private:
     double userGroupExec = 0;
     double valueExec = 0;
     
+    
+    std::string roomName = "";
+    double roomEnemyId = 0;
+    double roomUserId = 0;
     
 };
 
