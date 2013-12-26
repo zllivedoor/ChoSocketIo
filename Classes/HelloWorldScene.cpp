@@ -532,19 +532,30 @@ void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
     Armature* armaturePlayerA = Armature::create("girl");
     armaturePlayerA->setTag(10005);
     armaturePlayerA->setPosition(Point(195 ,215));
-    this->addChild(armaturePlayerA);
     armaturePlayerA->setZOrder(3);
     armaturePlayerA->getAnimation()->play("loading");
+    
+    if(this->getChildByTag(10005) != NULL){
+    
+    }else{
+        this->addChild(armaturePlayerA);
+    }
+    
+    
     
     // PlayerB
     ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/enemy/monster.ExportJson");
     Armature* armaturePlayerB = Armature::create("monster");
     armaturePlayerB->setTag(10006);
     armaturePlayerB->setPosition(Point(506 ,243));
-    this->addChild(armaturePlayerB);
     armaturePlayerB->setZOrder(3);
     armaturePlayerB->getAnimation()->play("loading");
     
+    if(this->getChildByTag(10006) != NULL){
+        
+    }else{
+        this->addChild(armaturePlayerB);
+    }
     
     
     
