@@ -189,7 +189,7 @@ bool HelloWorld::init()
     //setCoolDownEffect(layer,ui_seq_2->getPosition());
     
 
-    
+        nodeServerCon();
 
    
    
@@ -201,7 +201,7 @@ bool HelloWorld::init()
 void HelloWorld::nodeServerCon()
 {
     //平井さんのサーバー
-    _sioClient = SocketIO::connect(*this, "ws://10.13.165.59:3000");
+    _sioClient = SocketIO::connect(*this, "ws://10.13.201.109:3000");
     
     
     //僕のサーバー
@@ -407,10 +407,38 @@ void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
     
     
     // Skillをキャストする
+  
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  double millisecs = (double)tv.tv_sec * 1000 + (double)tv.tv_usec  * 0.001;
+  double castingTime = (castTime - millisecs) / 1000;
+  
+  log("sec##########: %f", (double)tv.tv_sec * 1000);
+  log("usec##########: %f", (double)tv.tv_usec  * 0.001);
+  log("sumsec##########: %f", (double)tv.tv_sec * 1000 + (double)tv.tv_usec  * 0.001);
+  log("c##########: %f", castTime);
+  log("m##########: %f", millisecs);
+  log("###########: %f", castingTime);
+  // キャラの動作を追加する
+  ProgressTimer* pt = ProgressTimer::create( Sprite::create("ui/SkillMenu_1/ui_seq_timer.png") );
+  if ( pt != NULL )
+  {
+    float mPercentage = 100;    // 定义CD的显示百分比
+    float cd_Time = castingTime;      // 定义CD的时间
+    pt->setPercentage(mPercentage);
+    pt->setPosition(230,310);
+    pt->setType(ProgressTimer::Type::RADIAL);
+    pt->setOpacity(100);
+    this->addChild(pt,4);
+    ProgressFromTo *fromto = ProgressFromTo::create(cd_Time, mPercentage, 0);
     
+    pt->runAction(CCSequence::create(fromto, CallFunc::create([=]() {
+    }), NULL));
+  }
+
     // キャラの動作を追加する
-    
-    
+  
+  
     //log("###########: %f", attribute);
    // log("###########: %f", castId);
     log("###########: %f", castTime);
