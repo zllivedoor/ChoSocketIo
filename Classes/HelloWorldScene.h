@@ -53,12 +53,14 @@ public:
     // a selector callback
     void menuCloseCallback(Object* pSender);
     void menuAttackCallback(cocos2d::Object *sender,TouchEventType type);
-    void joinRoomCallback(cocos2d::Object *sender,TouchEventType type);
+    void roomJoinCallback(cocos2d::Object *sender,TouchEventType type);
+    void roomCloseCallback(cocos2d::Object *sender,TouchEventType type);
     
     void setCoolDownEffect(UILayout* layout);
     
     void skillCoolDownCallBack(UILayout* layout);
     
+    void addPlayer(int user_id);
 private:
     UILayout* ui_targetStatus;
     

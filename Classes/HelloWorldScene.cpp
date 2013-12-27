@@ -131,16 +131,21 @@ bool HelloWorld::init()
     loginLayer->setPosition(Point(195 ,215));
     loginLayer->setZOrder(10);
     loginLayer->setTag(10010);
+    
     this->addChild(loginLayer);
     
     
-    auto joinRoom  = (UILayout*)loginLayer->getWidgetByName("Button_43");
-    joinRoom->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::joinRoomCallback));
+    auto roomJoin  = (UILayout*)loginLayer->getWidgetByName("Button_43");
+    roomJoin->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::roomJoinCallback));
+    
+    
+    auto roomClose  = (UILayout*)loginLayer->getWidgetByName("close_Button");
+    roomClose->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::roomCloseCallback));
     
     
     
     
-    
+   
     
     
     
@@ -187,7 +192,7 @@ bool HelloWorld::init()
     
 
    
-    nodeServerCon();
+   
     
     return true;
 }
@@ -198,15 +203,17 @@ void HelloWorld::nodeServerCon()
     //平井さんのサーバー
     _sioClient = SocketIO::connect(*this, "ws://10.13.165.59:3000");
     
+    
     //僕のサーバー
    // _sioClient = SocketIO::connect(*this, "ws://10.13.197.156:8080");
     
     _sioClient->on("battleCast", CC_CALLBACK_2(HelloWorld::battleCastEvent, this));
     _sioClient->on("battleExec", CC_CALLBACK_2(HelloWorld::battleExecEvent, this));
     _sioClient->on("battleStart", CC_CALLBACK_2(HelloWorld::battleStartEvent, this));
+   
 }
 
-void HelloWorld::joinRoomCallback(cocos2d::Object *sender,TouchEventType type)
+void HelloWorld::roomJoinCallback(cocos2d::Object *sender,TouchEventType type)
 {
     std::string args = "";
     
@@ -221,17 +228,30 @@ void HelloWorld::joinRoomCallback(cocos2d::Object *sender,TouchEventType type)
     
 }
 
+void HelloWorld::roomCloseCallback(cocos2d::Object *sender,TouchEventType type)
+{
+    roomEnemyId = 10006;
+    addPlayer(0);
+    addPlayer(roomEnemyId);
+    
+    auto loginLayer = (UILayer*)getChildByTag(10010);
+    loginLayer->setVisible(false);
+    
+}
+
+
 void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
 {
     std::string args = "";
     
     if (type == TOUCH_EVENT_BEGAN)
     {
-        auto armature = (Armature*)getChildByTag(10005);
+        auto armature = (Armature*)getChildByTag(0);
         armature->getAnimation()->play("attack");
         
         
-        auto armatureB = (Armature*)getChildByTag(10006);
+        auto armatureB = (Armature*)getChildByTag(roomEnemyId);
+        //TODO if hp == 0  death
         armatureB->getAnimation()->play("death");
         
         
@@ -526,39 +546,8 @@ void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
 
     
     // Playerを追加する
-    /////////////////////////////////
-    // PlayerA
-    ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/hero/girl.ExportJson");
-    Armature* armaturePlayerA = Armature::create("girl");
-    armaturePlayerA->setTag(10005);
-    armaturePlayerA->setPosition(Point(195 ,215));
-    armaturePlayerA->setZOrder(3);
-    armaturePlayerA->getAnimation()->play("loading");
-    
-    if(this->getChildByTag(10005) != NULL){
-    
-    }else{
-        this->addChild(armaturePlayerA);
-    }
-    
-    
-    
-    // PlayerB
-    ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/enemy/monster.ExportJson");
-    Armature* armaturePlayerB = Armature::create("monster");
-    armaturePlayerB->setTag(10006);
-    armaturePlayerB->setPosition(Point(506 ,243));
-    armaturePlayerB->setZOrder(3);
-    armaturePlayerB->getAnimation()->play("loading");
-    
-    if(this->getChildByTag(10006) != NULL){
-        
-    }else{
-        this->addChild(armaturePlayerB);
-    }
-    
-    
-    
+    addPlayer(0);
+    addPlayer(roomEnemyId);
     
     
     log("###########: %s", roomName.c_str());
@@ -567,29 +556,56 @@ void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
 
 }
 
-
+// Playerを追加する
+void HelloWorld::addPlayer(int user_id)
+{
+    if (user_id == 0) {
+        // PlayerA
+        ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/hero/girl.ExportJson");
+        Armature* armaturePlayerA = Armature::create("girl");
+        armaturePlayerA->setTag(user_id);
+        armaturePlayerA->setPosition(Point(195 ,215));
+        armaturePlayerA->setZOrder(3);
+        armaturePlayerA->getAnimation()->play("loading");
+    
+        if(this->getChildByTag(user_id) != NULL){
+        
+        }else{
+            this->addChild(armaturePlayerA);
+        }
+    }else{
+        // PlayerB
+        ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/enemy/monster.ExportJson");
+        Armature* armaturePlayerB = Armature::create("monster");
+        armaturePlayerB->setTag(user_id);
+        armaturePlayerB->setPosition(Point(506 ,243));
+        armaturePlayerB->setZOrder(3);
+        armaturePlayerB->getAnimation()->play("loading");
+        
+        if(this->getChildByTag(user_id) != NULL){
+            
+        }else{
+            this->addChild(armaturePlayerB);
+        }
+    }
+    
+    
+    
+}
 
 void HelloWorld::setCoolDownEffect(UILayout* layout)
 {
     ProgressTimer* pt = ProgressTimer::create( Sprite::create("ui/SkillMenu_1/ui_seq_timer.png") );
     if ( pt != NULL )
     {
-        float mPercentage = 100;    // 定义CD的显示百分比
-        float cd_Time = 8.0f;      // 定义CD的时间
-        pt->setPercentage(mPercentage);                          // 设置进度条最大百分比
-        pt->setPosition(layout->getWorldPosition());   // 设置CD图样的位置
-        pt->setType(ProgressTimer::Type::RADIAL);                 // 设置进度条动画类型
+        float mPercentage = 100;
+        float cd_Time = 8.0f;
+        pt->setPercentage(mPercentage);
+        pt->setPosition(layout->getWorldPosition());
+        pt->setType(ProgressTimer::Type::RADIAL);
         pt->setOpacity(100);
-        
-        
         this->addChild(pt,4);
-       
-        
-        
-        ProgressFromTo *fromto = ProgressFromTo::create(cd_Time, mPercentage, 0);  // 设定CD时间与要到达的百分比
-        
-       // pt->runAction(fromto);                                       // 给进度条加上动画条件
-        
+        ProgressFromTo *fromto = ProgressFromTo::create(cd_Time, mPercentage, 0);
         layout->setTouchEnabled(false);
       
         pt->runAction(CCSequence::create(fromto, CallFunc::create([=]() {
