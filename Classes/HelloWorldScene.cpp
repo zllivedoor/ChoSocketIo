@@ -360,7 +360,6 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
   int pos = positionData[id].get<double>();
   auto armature = (Armature*)getChildByTag(pos);
   armature->getAnimation()->play("attack");
-  armature->getAnimation()->play("loading");
   auto armatureB = (Armature*)getChildByTag(roomEnemyId);
   //TODO if hp == 0  death
   if (hp < 1) {
