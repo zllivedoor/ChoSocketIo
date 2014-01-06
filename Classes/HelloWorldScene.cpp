@@ -120,7 +120,7 @@ bool HelloWorld::init()
 void HelloWorld::nodeServerCon()
 {
   //平井さんのサーバー
-  _sioClient = SocketIO::connect(*this, "ws://10.13.165.59:3000");
+  _sioClient = SocketIO::connect(*this, "ws://10.13.164.201:3000");
   
   //僕のサーバー
   // _sioClient = SocketIO::connect(*this, "ws://10.13.197.156:8080");
