@@ -35,13 +35,14 @@ public:
     
     // implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
-    
+    picojson::object getArgs(const std::string& data);
     virtual void onConnect(network::SIOClient* client);
     virtual void onMessage(network::SIOClient* client, const std::string& data);
     virtual void onClose(network::SIOClient* client);
     virtual void onError(network::SIOClient* client, const std::string& data);
     network::SIOClient *_sioClient, *_sioEndpoint;
-    
+  
+    void userEvent(network::SIOClient *client, const std::string& data);
     void battleCastEvent(network::SIOClient *client, const std::string& data);
     void battleExecEvent(network::SIOClient *client, const std::string& data);
     void battleStartEvent(network::SIOClient *client, const std::string& data);
@@ -72,8 +73,10 @@ private:
     UILayout* ui_seq_5;
     UILayout* ui_seq_6;
     UILayout* ui_seq_start;
-    
-    
+    std::string userId = "";
+    picojson::object positionData;
+  
+    int groupCount = 0;
     
     double castTime = 0;
     double target = 0;
