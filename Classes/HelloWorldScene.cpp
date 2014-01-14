@@ -65,6 +65,27 @@ bool HelloWorld::init()
   {
     this->addChild(node);
   }
+    
+    
+    
+    
+    /*
+     今joinするときに{name:join, args{join:join}}
+     みたいなイベントをemitしてるとおもいますが、
+     teamA
+     {name:join, args{room:0}}
+     
+     teamB
+     {name:join, args{room:1}}
+     のような感じにしてください！
+     
+     
+     
+     startを押したときはこんなかんじでいいです
+     
+     {name:start, args{start:0}}
+     
+     */
   
   /////////////////////////////////
   // Join Room 画面
@@ -74,15 +95,31 @@ bool HelloWorld::init()
   loginLayer->setPosition(Point(195 ,215));
   loginLayer->setZOrder(10);
   loginLayer->setTag(10010);
-  
+    
   this->addChild(loginLayer);
-  
-  auto roomJoin  = (UILayout*)loginLayer->getWidgetByName("Button_43");
-  roomJoin->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::roomJoinCallback));
-  
-  auto roomClose  = (UILayout*)loginLayer->getWidgetByName("close_Button");
-  roomClose->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::roomCloseCallback));
-  
+    auto roomAJoin  = (UILayout*)loginLayer->getWidgetByName("Button_43_0_0");
+    roomAJoin->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::roomAJoinCallback));
+    
+    auto roomBJoin  = (UILayout*)loginLayer->getWidgetByName("Button_43_0");
+    roomBJoin->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::roomBJoinCallback));
+    
+    auto roomClose  = (UILayout*)loginLayer->getWidgetByName("close_Button");
+    roomClose->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::roomCloseCallback));
+    
+  /////////////////////////////////
+  // Start 画面
+  UILayer* startLayer = UILayer::create();
+  auto startLayout = GUIReader::shareReader()->widgetFromJsonFile("ui/Battle/Battle.json");
+  startLayer->addWidget(startLayout);
+  startLayer->setPosition(Point(195 ,215));
+  startLayer->setZOrder(10);
+  startLayer->setTag(10011);
+  startLayer->setVisible(false);
+  this->addChild(startLayer);
+    
+  auto startBattle  = (UILayout*)startLayer->getWidgetByName("Button_43_0");
+  startBattle->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::startBattleCallback));
+    
   /////////////////////////////////
   // Target Status情報
   auto targetStatus = node->getChildByTag(10014);
@@ -140,20 +177,76 @@ void HelloWorld::nodeServerCon()
   
 }
 
-void HelloWorld::roomJoinCallback(cocos2d::Object *sender,TouchEventType type)
+
+void HelloWorld::roomAJoinCallback(cocos2d::Object *sender,TouchEventType type)
 {
-  std::string args = "";
-  
-  args="{\"join\":\"join\"}";
-  
-  if (type == TOUCH_EVENT_BEGAN){}
-  if (type == TOUCH_EVENT_MOVED){}
-  if (type == TOUCH_EVENT_ENDED)
-  {
-    if(_sioClient != NULL) _sioClient->emit("join",args);
-  }
-  
+    std::string args = "";
+    
+    args="{\"room\":0}";
+    
+    if (type == TOUCH_EVENT_BEGAN){}
+    if (type == TOUCH_EVENT_MOVED){}
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        if(_sioClient != NULL) _sioClient->emit("join",args);
+        
+        // Join Room画面を非表示する
+        auto loginLayer = (UILayer*)getChildByTag(10010);
+        loginLayer->setVisible(false);
+        
+        
+        auto startLayer = (UILayer*)getChildByTag(10011);
+        startLayer->setVisible(true);
+        
+        
+    }
+    
 }
+
+void HelloWorld::roomBJoinCallback(cocos2d::Object *sender,TouchEventType type)
+{
+    std::string args = "";
+    
+    args="{\"room\":1}";
+    
+    if (type == TOUCH_EVENT_BEGAN){}
+    if (type == TOUCH_EVENT_MOVED){}
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        if(_sioClient != NULL) _sioClient->emit("join",args);
+    }
+    
+}
+
+
+//{name:start, args{start:0}}
+void HelloWorld::startBattleCallback(cocos2d::Object *sender,TouchEventType type)
+{
+    std::string args = "";
+    
+    args="{\"start\":0}";
+    
+    if (type == TOUCH_EVENT_BEGAN){}
+    if (type == TOUCH_EVENT_MOVED){}
+    if (type == TOUCH_EVENT_ENDED)
+    {
+        if(_sioClient != NULL) _sioClient->emit("start",args);
+        
+        // Join Room画面を非表示する
+        auto loginLayer = (UILayer*)getChildByTag(10010);
+        loginLayer->setVisible(false);
+        
+        
+        auto startLayer = (UILayer*)getChildByTag(10011);
+        startLayer->setVisible(false);
+        
+        
+    }
+    
+}
+
+
+
 
 void HelloWorld::roomCloseCallback(cocos2d::Object *sender,TouchEventType type)
 {

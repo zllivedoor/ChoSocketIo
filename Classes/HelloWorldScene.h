@@ -15,6 +15,7 @@
 #include <stdio.h>      /* puts, printf */
 #include <time.h>
 
+#include "CCActionManager.h"
 
 using namespace cocostudio;
 using namespace gui;
@@ -54,8 +55,10 @@ public:
     // a selector callback
     void menuCloseCallback(Object* pSender);
     void menuAttackCallback(cocos2d::Object *sender,TouchEventType type);
-    void roomJoinCallback(cocos2d::Object *sender,TouchEventType type);
+    void roomAJoinCallback(cocos2d::Object *sender,TouchEventType type);
+    void roomBJoinCallback(cocos2d::Object *sender,TouchEventType type);
     void roomCloseCallback(cocos2d::Object *sender,TouchEventType type);
+    void startBattleCallback(cocos2d::Object *sender,TouchEventType type);
     
     void setCoolDownEffect(UILayout* layout);
     
