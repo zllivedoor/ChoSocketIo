@@ -117,7 +117,7 @@ bool HelloWorld::init()
   startLayer->setVisible(false);
   this->addChild(startLayer);
     
-  auto startBattle  = (UILayout*)startLayer->getWidgetByName("Button_43_0");
+  auto startBattle  = (UILayout*)startLayer->getWidgetByName("Battle");
   startBattle->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::startBattleCallback));
     
   /////////////////////////////////
