@@ -203,6 +203,11 @@ void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
       sendMsg.clear();
       actionData.clear();
       currentAction = 0;
+      this->removeChildByTag(901);
+      this->removeChildByTag(902);
+      this->removeChildByTag(903);
+      this->removeChildByTag(904);
+      
       sendMsg["target"] = picojson::value((std::string)"1");
       sendMsg["targetGroup"] = picojson::value((std::string)"0");
       sendMsg["user"] = picojson::value((std::string)userId);
@@ -372,15 +377,13 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
   int hp = obj["hp"].get<double>();
   int mhp = obj["maxhp"].get<double>();
   
-  auto top = LabelTTF::create(value, "Abduction", 76);
-  
-  
-  top->enableStroke(ccBLACK,2.0,true);
-  top->setPosition(Point(550 ,350));
-  top->setTag(1000);
-  top->setZOrder(1000);
-  top->setScale(0);
-  this->addChild(top);
+  auto damage = LabelTTF::create(value, "Abduction", 76);
+  damage->enableStroke(ccBLACK,2.0,true);
+  damage->setPosition(Point(550 ,350));
+  damage->setTag(1000);
+  damage->setZOrder(1000);
+  damage->setScale(0);
+  this->addChild(damage);
   
   DelayTime *delay = DelayTime::create(0.45);
   FadeIn *fadeIn = FadeIn::create(0.2);
@@ -396,7 +399,7 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
                                          skaleTo,
                                          Spawn,
                                          NULL);
-  top->runAction(seqAction);
+  damage->runAction(seqAction);
   
   // キャラの動作を追加する
   int pos = positionData[user].get<double>();
@@ -415,15 +418,7 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
   log("###########: %s", value.c_str());
   
 }
-void HelloWorld::popDamage(float tm){
-  
-}
 
-void HelloWorld::removeLabel(Node* sender)
-{
-  CCLabelTTF* label = (LabelTTF*)sender;
-  this->removeChild(label, true);
-}
 void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
   
   //cocos2d-xでJSONを使う http://nirasan.hatenablog.com/entry/2013/10/24/232905
@@ -547,7 +542,7 @@ void HelloWorld::skillCoolDownCallBack(UILayout* layout)
 }
 
 
-// Playerを追加する
+// Actionを追加する
 void HelloWorld::addAction(int actionId)
 {
   if (currentAction < 4) {
@@ -557,6 +552,16 @@ void HelloWorld::addAction(int actionId)
     obj["action"] = picojson::value((double)actionId);
     actionData[ss.str()] = picojson::value((picojson::object)obj);
     currentAction++;
+    
+    stringstream ss2;
+    ss2 << actionId;
+    auto action = LabelTTF::create(ss2.str(), "Abduction", 76);
+    action->enableStroke(ccBLACK,2.0,true);
+    action->setPosition(Point(50 * currentAction ,350));
+    action->setTag(900+currentAction);
+    action->setZOrder(1001);
+    this->addChild(action);
+    
     log("addAction action: %i", actionId);
   }
 }
