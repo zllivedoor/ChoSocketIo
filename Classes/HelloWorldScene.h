@@ -60,8 +60,10 @@ public:
     void setCoolDownEffect(UILayout* layout);
     
     void skillCoolDownCallBack(UILayout* layout);
-    
+    void addAction(int actionId);
     void addPlayer(int user_id);
+    void popDamage(float tm);
+    void removeLabel(Node* sender);
 private:
     UILayout* ui_targetStatus;
     
@@ -75,24 +77,15 @@ private:
     UILayout* ui_seq_start;
     std::string userId = "";
     picojson::object positionData;
-  
+
+    int currentAction = 0;
+
+    picojson::object actionData;
+    picojson::object sendMsg;
     int groupCount = 0;
     
-    double castTime = 0;
-    double target = 0;
-    double targetGroup = 0;
-    double user = 0;
-    double userGroup = 0;
-    
-    
-    std::string nameExec = "";
-    double targetExec = 0;
-    double targetGroupExec = 0;
-    double userExec = 0;
-    double userGroupExec = 0;
-    double valueExec = 0;
-    
-    
+    std::string damage;
+  
     std::string roomName = "";
     double roomEnemyId = 0;
     double roomUserId = 0;

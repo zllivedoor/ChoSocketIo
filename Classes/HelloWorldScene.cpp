@@ -1,5 +1,14 @@
 #include "HelloWorldScene.h"
-
+enum {
+  kTagLabel1,
+  kTagLabel2,
+  kTagLabel3,
+  kTagLabel4,
+  
+  kTagColor1,
+  kTagColor2,
+  kTagColor3,
+};
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace network;
@@ -172,31 +181,34 @@ void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
   if (type == TOUCH_EVENT_ENDED)
   {
     if(sender->isEqual(ui_seq_1)){
-      setCoolDownEffect(ui_seq_1);
-      args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+      addAction(1);
     }else if(sender->isEqual(ui_seq_2)){
-      setCoolDownEffect(ui_seq_2);
-      args = "{\"sequence\":[{\"action\":1,\"seqId\":2},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+      addAction(2);
     }else if(sender->isEqual(ui_seq_3)){
-      setCoolDownEffect(ui_seq_3);
-      args = "{\"sequence\":[{\"action\":1,\"seqId\":3},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+      addAction(3);
     }else if(sender->isEqual(ui_seq_4)){
-      setCoolDownEffect(ui_seq_4);
-      args = "{\"sequence\":[{\"action\":1,\"seqId\":4},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+      addAction(4);
     }else if(sender->isEqual(ui_seq_5)){
-      setCoolDownEffect(ui_seq_5);
-      args = "{\"sequence\":[{\"action\":1,\"seqId\":5},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+      addAction(5);
     }else if(sender->isEqual(ui_seq_6)){
-      setCoolDownEffect(ui_seq_6);
-      args = "{\"sequence\":[{\"action\":1,\"seqId\":6},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":123,\"userGroup\":0}";
+      addAction(6);
     }else if(sender->isEqual(ui_seq_start)){
+      sendMsg["sequence"] = picojson::value((picojson::object)actionData);
       
       setCoolDownEffect(ui_seq_start);
-      args = "{\"sequence\":[{\"action\":1,\"seqId\":1},{\"action\":2,\"seqId\":2},{\"action\":3,\"seqId\":3},{\"action\":1,\"seqId\":4}],\"target\":1,\"targetGroup\":0,\"user\":\""+userId+"\",\"userGroup\":0}";
       
+      std::string args = ((picojson::value)(sendMsg)).serialize();
+      
+      if(_sioClient != NULL) _sioClient->emit("battleAction",args);
+      sendMsg.clear();
+      actionData.clear();
+      currentAction = 0;
+      sendMsg["target"] = picojson::value((std::string)"1");
+      sendMsg["targetGroup"] = picojson::value((std::string)"0");
+      sendMsg["user"] = picojson::value((std::string)userId);
+      sendMsg["userGroup"] = picojson::value((std::string)"0");
     }
     
-    if(_sioClient != NULL) _sioClient->emit("battleAction",args);
   }
   
 }
@@ -273,6 +285,10 @@ void HelloWorld::onError(network::SIOClient* client, const std::string& data)
 void HelloWorld::userEvent(SIOClient *client, const std::string& data) {
   picojson::object obj = HelloWorld::getArgs(data);
   userId = obj["userId"].get<std::string>();
+  sendMsg["target"] = picojson::value((std::string)"1");
+  sendMsg["targetGroup"] = picojson::value((std::string)"0");
+  sendMsg["user"] = picojson::value((std::string)userId);
+  sendMsg["userGroup"] = picojson::value((std::string)"0");
 }
 
 picojson::object HelloWorld::getArgs(const std::string& data) {
@@ -295,11 +311,11 @@ void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
   //cocos2d-xでJSONを使う http://nirasan.hatenablog.com/entry/2013/10/24/232905
 	log("きゃすと【battleCastEvent】: %s", data.c_str());
   picojson::object obj = HelloWorld::getArgs(data);
-  castTime = obj["castTime"].get<double>();
-  target = obj["target"].get<double>();
-  targetGroup = obj["targetGroup"].get<double>();
+  double castTime = obj["castTime"].get<double>();
+  std::string target = obj["target"].get<std::string>();
+  std::string targetGroup = obj["targetGroup"].get<std::string>();
   std::string id = obj["user"].get<std::string>();
-  userGroup = obj["userGroup"].get<double>();
+  std::string userGroup = obj["userGroup"].get<std::string>();
   
   // Skillをキャストする
   struct timeval tv;
@@ -347,17 +363,43 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
 	log("Att OVER【battleExecEvent】: %s", data.c_str());
   picojson::object obj = HelloWorld::getArgs(data);
   
-  nameExec = obj["name"].get<std::string>();
-  targetExec = obj["target"].get<double>();
-  targetGroupExec = obj["targetGroup"].get<double>();
-  std::string id = obj["user"].get<std::string>();
-  userGroupExec = obj["userGroup"].get<double>();
-  valueExec = obj["value"].get<double>();
+  std::string name = obj["name"].get<std::string>();
+  std::string target = obj["target"].get<std::string>();
+  std::string targetGroup = obj["targetGroup"].get<std::string>();
+  std::string user = obj["user"].get<std::string>();
+  std::string userGroup = obj["userGroup"].get<std::string>();
+  std::string value = obj["value"].get<std::string>();
   int hp = obj["hp"].get<double>();
   int mhp = obj["maxhp"].get<double>();
   
+  auto top = LabelTTF::create(value, "Abduction", 76);
+  
+  
+  top->enableStroke(ccBLACK,2.0,true);
+  top->setPosition(Point(550 ,350));
+  top->setTag(1000);
+  top->setZOrder(1000);
+  top->setScale(0);
+  this->addChild(top);
+  
+  DelayTime *delay = DelayTime::create(0.45);
+  FadeIn *fadeIn = FadeIn::create(0.2);
+  ScaleTo* skaleTo = ScaleTo::create(0.1f, 1.5f);
+	MoveTo* moveAction = MoveTo::create(2.0, Point(550 ,450));
+	Sequence* removeAction = Sequence::create(DelayTime::create(1),
+                                            fadeIn->reverse(),
+                                            NULL);
+  Spawn* Spawn = Spawn::create(moveAction,
+                               removeAction,
+                               NULL);
+	Sequence* seqAction = Sequence::create(DelayTime::create(0.45),
+                                         skaleTo,
+                                         Spawn,
+                                         NULL);
+  top->runAction(seqAction);
+  
   // キャラの動作を追加する
-  int pos = positionData[id].get<double>();
+  int pos = positionData[user].get<double>();
   auto armature = (Armature*)getChildByTag(pos);
   armature->getAnimation()->play("attack");
   auto armatureB = (Armature*)getChildByTag(roomEnemyId);
@@ -365,15 +407,23 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
   if (hp < 1) {
     armatureB->getAnimation()->play("death");
   }
-  log("###########: %s", nameExec.c_str());
-  log("###########: %f", targetExec);
-  log("###########: %f", targetGroupExec);
-  //log("###########: %f", userExec);
-  log("###########: %f", userGroupExec);
-  log("###########: %f", valueExec);
+  log("###########: %s", name.c_str());
+  log("###########: %s", target.c_str());
+  log("###########: %s", targetGroup.c_str());
+  log("###########: %s", user.c_str());
+  log("###########: %s", userGroup.c_str());
+  log("###########: %s", value.c_str());
+  
+}
+void HelloWorld::popDamage(float tm){
   
 }
 
+void HelloWorld::removeLabel(Node* sender)
+{
+  CCLabelTTF* label = (LabelTTF*)sender;
+  this->removeChild(label, true);
+}
 void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
   
   //cocos2d-xでJSONを使う http://nirasan.hatenablog.com/entry/2013/10/24/232905
@@ -497,7 +547,19 @@ void HelloWorld::skillCoolDownCallBack(UILayout* layout)
 }
 
 
-
+// Playerを追加する
+void HelloWorld::addAction(int actionId)
+{
+  if (currentAction < 4) {
+    stringstream ss;
+    ss << currentAction;
+    picojson::object obj;
+    obj["action"] = picojson::value((double)actionId);
+    actionData[ss.str()] = picojson::value((picojson::object)obj);
+    currentAction++;
+    log("addAction action: %i", actionId);
+  }
+}
 
 
 
