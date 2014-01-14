@@ -214,6 +214,16 @@ void HelloWorld::roomBJoinCallback(cocos2d::Object *sender,TouchEventType type)
     if (type == TOUCH_EVENT_ENDED)
     {
         if(_sioClient != NULL) _sioClient->emit("join",args);
+        
+        // Join Room画面を非表示する
+        auto loginLayer = (UILayer*)getChildByTag(10010);
+        loginLayer->setVisible(false);
+        
+        
+        auto startLayer = (UILayer*)getChildByTag(10011);
+        startLayer->setVisible(true);
+        
+        
     }
     
 }
@@ -467,7 +477,14 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
   std::string user = obj["user"].get<std::string>();
   std::string userGroup = obj["userGroup"].get<std::string>();
   std::string value = obj["value"].get<std::string>();
-  int hp = obj["hp"].get<double>();
+
+  int hp = 0;
+  if( obj["hp"].is<double>()){
+    hp = obj["hp"].get<double>();
+  }else{
+      hp = 1000;
+  }
+ 
   int mhp = obj["maxhp"].get<double>();
   
   auto damage = LabelTTF::create(value, "Abduction", 76);
