@@ -171,9 +171,10 @@ void HelloWorld::nodeServerCon()
   //僕のサーバー
   // _sioClient = SocketIO::connect(*this, "ws://10.13.197.156:8080");
   _sioClient->on("user", CC_CALLBACK_2(HelloWorld::userEvent, this));
+  _sioClient->on("newcomer", CC_CALLBACK_2(HelloWorld::newcomerEvent, this));
+  _sioClient->on("battleStart", CC_CALLBACK_2(HelloWorld::battleStartEvent, this));
   _sioClient->on("battleCast", CC_CALLBACK_2(HelloWorld::battleCastEvent, this));
   _sioClient->on("battleExec", CC_CALLBACK_2(HelloWorld::battleExecEvent, this));
-  _sioClient->on("battleStart", CC_CALLBACK_2(HelloWorld::battleStartEvent, this));
   
 }
 
@@ -386,10 +387,32 @@ void HelloWorld::onError(network::SIOClient* client, const std::string& data)
   
 }
 
-
 void HelloWorld::userEvent(SIOClient *client, const std::string& data) {
   picojson::object obj = HelloWorld::getArgs(data);
   userId = obj["userId"].get<std::string>();
+}
+
+void HelloWorld::newcomerEvent(SIOClient *client, const std::string& data) {
+  
+  picojson::object obj = HelloWorld::getArgs(data);
+  std::string team = obj["team"].get<std::string>();
+  FadeIn *fadeIn = FadeIn::create(0.2);
+  ScaleTo* skaleTo = ScaleTo::create(0.1f, 1.5f);
+	Sequence* removeAction = Sequence::create(DelayTime::create(3),
+                                                fadeIn->reverse(),
+                                                NULL);
+  
+  auto newcomer = LabelTTF::create("A new player joined the team " + team + " !!", "Abduction", 17);
+  newcomer->setPosition(Point(435 ,450));
+  newcomer->setTag(999);
+  newcomer->setZOrder(1000);
+  newcomer->setScale(0);
+  this->addChild(newcomer);
+	Sequence* seqActionArts = Sequence::create(skaleTo,
+                                             removeAction,
+                                             NULL);
+  newcomer->runAction(seqActionArts);
+  
 }
 
 picojson::object HelloWorld::getArgs(const std::string& data) {

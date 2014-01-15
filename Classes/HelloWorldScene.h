@@ -44,9 +44,10 @@ public:
     network::SIOClient *_sioClient, *_sioEndpoint;
   
     void userEvent(network::SIOClient *client, const std::string& data);
+    void newcomerEvent(network::SIOClient *client, const std::string& data);
+    void battleStartEvent(network::SIOClient *client, const std::string& data);
     void battleCastEvent(network::SIOClient *client, const std::string& data);
     void battleExecEvent(network::SIOClient *client, const std::string& data);
-    void battleStartEvent(network::SIOClient *client, const std::string& data);
     
 	void echotest(network::SIOClient *client, const std::string& data);
     void nodeServerCon();
