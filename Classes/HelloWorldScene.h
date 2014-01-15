@@ -64,7 +64,7 @@ public:
     
     void skillCoolDownCallBack(UILayout* layout);
     void addAction(int actionId);
-    void addPlayer(int user_id);
+    void addPlayer(int user_id, bool Ally);
     void popDamage(float tm);
     void removeLabel(Node* sender);
 private:
@@ -87,7 +87,7 @@ private:
     picojson::object sendMsg;
     int groupCount = 0;
     
-    std::string damage;
+    std::string target;
   
     std::string roomName = "";
     double roomEnemyId = 0;

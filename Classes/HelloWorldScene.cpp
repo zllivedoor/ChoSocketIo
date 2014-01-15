@@ -260,9 +260,6 @@ void HelloWorld::startBattleCallback(cocos2d::Object *sender,TouchEventType type
 
 void HelloWorld::roomCloseCallback(cocos2d::Object *sender,TouchEventType type)
 {
-  roomEnemyId = 10006;
-  addPlayer(roomEnemyId);
-  
   auto loginLayer = (UILayer*)getChildByTag(10010);
   loginLayer->setVisible(false);
   
@@ -311,7 +308,7 @@ void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
       this->removeChildByTag(903);
       this->removeChildByTag(904);
       
-      sendMsg["target"] = picojson::value((std::string)"1");
+      sendMsg["target"] = picojson::value((std::string)target);
       sendMsg["targetGroup"] = picojson::value((std::string)"0");
       sendMsg["user"] = picojson::value((std::string)userId);
       sendMsg["userGroup"] = picojson::value((std::string)"0");
@@ -393,10 +390,6 @@ void HelloWorld::onError(network::SIOClient* client, const std::string& data)
 void HelloWorld::userEvent(SIOClient *client, const std::string& data) {
   picojson::object obj = HelloWorld::getArgs(data);
   userId = obj["userId"].get<std::string>();
-  sendMsg["target"] = picojson::value((std::string)"1");
-  sendMsg["targetGroup"] = picojson::value((std::string)"0");
-  sendMsg["user"] = picojson::value((std::string)userId);
-  sendMsg["userGroup"] = picojson::value((std::string)"0");
 }
 
 picojson::object HelloWorld::getArgs(const std::string& data) {
@@ -438,10 +431,19 @@ void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
     float mPercentage = 100;    // 定义CD的显示百分比
     float cd_Time = castingTime;      // 定义CD的时间
     int pos = positionData[id].get<double>();
+    int posX = 0;
+    int posY = 0;
+    if (pos < 10) {
+      posX = pos * 50 + 150;
+      posY = pos * 30 + 200;
+    } else {
+      posX = 590 - (pos - 10) * 50;
+      posY = (pos - 10) * 30 + 230;
+    }
     
     pt->setPercentage(mPercentage);
     pt->setMidpoint(Point(0,0));
-    pt->setPosition(pos * 50 + 140 ,pos * 30 + 300);
+    pt->setPosition(posX ,posY + 90);
     pt->setScaleX(200);
     pt->setScaleY(0.5);
     pt->setType(ProgressTimer::Type::BAR);
@@ -487,9 +489,20 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
  
   int mhp = obj["maxhp"].get<double>();
   
+  int targetPos = positionData[target].get<double>();
+  int targetPosX = 0;
+  int targetPosY = 0;
+  if (targetPos < 10) {
+    targetPosX = targetPos * 50 + 150;
+    targetPosY = targetPos * 30 + 250;
+  } else {
+    targetPosX = 590 - (targetPos - 10) * 50;
+    targetPosY = (targetPos - 10) * 30 + 230;
+  }
+  
   auto damage = LabelTTF::create(value, "Abduction", 76);
   damage->enableStroke(ccBLACK,2.0,true);
-  damage->setPosition(Point(550 ,350));
+  damage->setPosition(Point(targetPosX + 30 ,targetPosY + 50));
   damage->setTag(1000);
   damage->setZOrder(1000);
   damage->setScale(0);
@@ -498,7 +511,7 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
   DelayTime *delay = DelayTime::create(0.45);
   FadeIn *fadeIn = FadeIn::create(0.2);
   ScaleTo* skaleTo = ScaleTo::create(0.1f, 1.5f);
-	MoveTo* moveAction = MoveTo::create(2.0, Point(550 ,450));
+	MoveTo* moveAction = MoveTo::create(2.0, Point(targetPosX + 30 ,targetPosY + 150));
 	Sequence* removeAction = Sequence::create(DelayTime::create(1),
                                             fadeIn->reverse(),
                                             NULL);
@@ -510,15 +523,41 @@ void HelloWorld::battleExecEvent(SIOClient *client, const std::string& data) {
                                          Spawn,
                                          NULL);
   damage->runAction(seqAction);
+  int pos = positionData[user].get<double>();
+  int posX = 0;
+  int posY = 0;
+  if (pos < 10) {
+    posX = pos * 50 + 150;
+    posY = pos * 30 + 200;
+  } else {
+    posX = 590 - (pos - 10) * 50;
+    posY = (pos - 10) * 30 + 230;
+  }
+  FadeIn *artsfadeIn = FadeIn::create(0.2);
+  ScaleTo* artsskaleTo = ScaleTo::create(0.1f, 1.5f);
+	Sequence* artsremoveAction = Sequence::create(DelayTime::create(0.5),
+                                                artsfadeIn->reverse(),
+                                                NULL);
+  
+  auto artsName = LabelTTF::create(name, "Abduction", 48);
+  artsName->enableStroke(ccBLACK,1.0,true);
+  artsName->setPosition(Point(posX ,posY + 130));
+  artsName->setTag(999);
+  artsName->setZOrder(1000);
+  artsName->setScale(0);
+  this->addChild(artsName);
+	Sequence* seqActionArts = Sequence::create(artsskaleTo,
+                                             artsremoveAction,
+                                             NULL);
+  artsName->runAction(seqActionArts);
   
   // キャラの動作を追加する
-  int pos = positionData[user].get<double>();
   auto armature = (Armature*)getChildByTag(pos);
   armature->getAnimation()->play("attack");
-  auto armatureB = (Armature*)getChildByTag(roomEnemyId);
   //TODO if hp == 0  death
   if (hp < 1) {
-    armatureB->getAnimation()->play("death");
+    auto armature = (Armature*)getChildByTag(targetPos);
+    armature->getAnimation()->play("death");
   }
   log("###########: %s", name.c_str());
   log("###########: %s", target.c_str());
@@ -535,12 +574,12 @@ void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
 	log("##########Join Room Over#########【battleStartEvent】: %s", data.c_str());
   
   picojson::object obj = HelloWorld::getArgs(data);
+
   picojson::object userObj = obj["user"].get<picojson::object>();
   picojson::array  userArray = userObj["member"].get<picojson::array>();
-  int userGroupId = userObj["groupId"].get<double>();
   int positionCount = 0;
   
-  
+  // 自分を追加
   for (picojson::array::iterator it = userArray.begin();
        it != userArray.end(); it++
        ) {
@@ -549,10 +588,11 @@ void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
     std::string id = userParam["id"].get<std::string>();
     if (id == userId){
       positionData[id] = picojson::value((double)positionCount);
-      addPlayer(positionCount);
+      addPlayer(positionCount,true);
       positionCount++;
     }
   }
+  // 味方を追加
   for (picojson::array::iterator it = userArray.begin();
        it != userArray.end(); it++
        ) {
@@ -561,30 +601,48 @@ void HelloWorld::battleStartEvent(SIOClient *client, const std::string& data) {
     std::string id = userParam["id"].get<std::string>();
     if (id != userId){
       positionData[id] = picojson::value((double)positionCount);
-      addPlayer(positionCount);
+      addPlayer(positionCount,true);
       positionCount++;
     }
   }
+
+  picojson::object enemyObj = obj["enemy"].get<picojson::object>();
+  picojson::array  enemyArray = enemyObj["member"].get<picojson::array>();
+  positionCount = 10;
+  // 敵を追加
+  for (picojson::array::iterator it = enemyArray.begin();
+       it != enemyArray.end(); it++
+       ) {
+    picojson::object& enemyParam = it->get<picojson::object>();
+    // Playerを追加する
+    std::string id = enemyParam["id"].get<std::string>();
+    target = id;
+    if (id != userId){
+      positionData[id] = picojson::value((double)positionCount);
+      addPlayer(positionCount,false);
+      positionCount++;
+    }
+  }
+  
+  sendMsg["target"] = picojson::value((std::string)target);
+  sendMsg["targetGroup"] = picojson::value((std::string)"0");
+  sendMsg["user"] = picojson::value((std::string)userId);
+  sendMsg["userGroup"] = picojson::value((std::string)"0");
+  
   // Join Room画面を非表示する
   auto loginLayer = (UILayer*)getChildByTag(10010);
   loginLayer->setVisible(false);
   
-  
-  // Playerを追加する
-  roomEnemyId = 10006;
-  addPlayer(roomEnemyId);
-  
-  
+  log("######target#####: %s", target.c_str());
   log("###########: %s", roomName.c_str());
-  log("###########: %f", roomEnemyId);
-  log("###########: %f", roomUserId);
   
 }
 
 // Playerを追加する
-void HelloWorld::addPlayer(int pos)
+void HelloWorld::addPlayer(int pos, bool Ally)
 {
-  if (pos < 10000) {
+  if (Ally) {
+    log("#####adding player###### %i", pos);
     // PlayerA
     ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/hero/girl.ExportJson");
     Armature* armaturePlayerA = Armature::create("girl");
@@ -599,12 +657,14 @@ void HelloWorld::addPlayer(int pos)
       this->addChild(armaturePlayerA);
     }
   }else{
+    int npos = pos - 10;
+    log("#####adding enemy###### %i", npos);
     // PlayerB
     ArmatureDataManager::getInstance()->addArmatureFileInfo("ani/enemy/monster.ExportJson");
     Armature* armaturePlayerB = Armature::create("monster");
     armaturePlayerB->setTag(pos);
-    armaturePlayerB->setPosition(Point(506 ,243));
-    armaturePlayerB->setZOrder(3);
+    armaturePlayerB->setPosition(Point(590 - npos * 30  ,npos * 30 + 230));
+    armaturePlayerB->setZOrder(10 - npos);
     armaturePlayerB->getAnimation()->play("loading");
     
     if(this->getChildByTag(pos) != NULL){
