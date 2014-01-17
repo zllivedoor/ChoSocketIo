@@ -460,7 +460,7 @@ void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
     pt->setPercentage(mPercentage);
     pt->setMidpoint(Point(0,0));
     pt->setPosition(posX ,posY + 90);
-    pt->setTag(10000 + pos);
+    pt->setTag(5000 + pos);
     pt->setScaleX(200);
     pt->setScaleY(1);
     pt->setType(ProgressTimer::Type::BAR);
@@ -595,7 +595,9 @@ void HelloWorld::battleBreakEvent(SIOClient *client, const std::string& data) {
 
   std::string user = obj["user"].get<std::string>();
   int pos = positionData[user].get<double>();
-  auto pt = getChildByTag(10000 + pos);
+  log("pos %i",pos);
+log("1000pos %i",5000 + pos);
+  auto pt = getChildByTag(5000 + pos);
   if (pt){
     pt->stopAllActions();
     pt->runAction(CCSequence::create(DelayTime::create(0.4),
