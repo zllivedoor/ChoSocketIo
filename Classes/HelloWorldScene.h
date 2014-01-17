@@ -48,7 +48,8 @@ public:
     void battleStartEvent(network::SIOClient *client, const std::string& data);
     void battleCastEvent(network::SIOClient *client, const std::string& data);
     void battleExecEvent(network::SIOClient *client, const std::string& data);
-    
+    void battleBreakEvent(network::SIOClient *client, const std::string& data);
+
 	void echotest(network::SIOClient *client, const std::string& data);
     void nodeServerCon();
     
