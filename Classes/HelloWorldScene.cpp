@@ -113,11 +113,11 @@ bool HelloWorld::init()
 
   /////////////////////////////////
   // Target Status情報
-  auto targetStatus = node->getChildByTag(10014);
-  auto ts_reader = (ComRender*)targetStatus->getComponent("GUIComponent");
-  auto ts_layer = (UILayer*)ts_reader->getNode();
-  ui_targetStatus = (UILayout*)ts_layer->getWidgetByName("ui_hp");
-  ui_targetStatus->UIWidget::setScaleX(0.5);// remainHP/maxHP をここに設定します。
+  //auto targetStatus = node->getChildByTag(10014);
+  //auto ts_reader = (ComRender*)targetStatus->getComponent("GUIComponent");
+  //auto ts_layer = (UILayer*)ts_reader->getNode();
+  //ui_targetStatus = (UILayout*)ts_layer->getWidgetByName("ui_hp");
+  //ui_targetStatus->UIWidget::setScaleX(0.5);// remainHP/maxHP をここに設定します。
 
 
   /////////////////////////////////
@@ -135,14 +135,8 @@ bool HelloWorld::init()
   ui_seq_3 = (UILayout*)layer->getWidgetByName("ui_seq_3");
   ui_seq_3->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
 
-  ui_seq_4 = (UILayout*)layer->getWidgetByName("ui_seq_4");
-  ui_seq_4->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
-
-  ui_seq_5 = (UILayout*)layer->getWidgetByName("ui_seq_5");
-  ui_seq_5->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
-
-  ui_seq_6 = (UILayout*)layer->getWidgetByName("ui_seq_6");
-  ui_seq_6->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
+  //ui_seq_4 = (UILayout*)layer->getWidgetByName("ui_seq_4");
+  //ui_seq_4->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
 
   ui_seq_start = (UILayout*)layer->getWidgetByName("ui_seq_start");
   ui_seq_start->UIWidget::addTouchEventListener(this, toucheventselector(HelloWorld::menuAttackCallback));
@@ -281,10 +275,6 @@ void HelloWorld::menuAttackCallback(cocos2d::Object *sender,TouchEventType type)
       addAction(3);
     }else if(sender->isEqual(ui_seq_4)){
       addAction(4);
-    }else if(sender->isEqual(ui_seq_5)){
-      addAction(5);
-    }else if(sender->isEqual(ui_seq_6)){
-      addAction(6);
     }else if(sender->isEqual(ui_seq_start)){
       sendMsg["sequence"] = picojson::value((picojson::object)actionData);
 
@@ -429,6 +419,7 @@ void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
 	log("きゃすと【battleCastEvent】: %s", data.c_str());
   picojson::object obj = HelloWorld::getArgs(data);
   double castTime = obj["castTime"].get<double>();
+  double attribute = obj["attribute"].get<double>();
   std::string target = obj["target"].get<std::string>();
   std::string targetGroup = obj["targetGroup"].get<std::string>();
   std::string id = obj["user"].get<std::string>();
@@ -457,12 +448,29 @@ void HelloWorld::battleCastEvent(SIOClient *client, const std::string& data) {
       posY = (pos - 10) * 30 + 230;
     }
 
+    int r = 100;
+    int b = 100;
+    int g = 100;
+    if (attribute == 1){
+      r = 255;
+      b = 100;
+      g = 100;
+    } else if (attribute == 2){
+      r = 100;
+      b = 255;
+      g = 100;
+    } else if (attribute == 3){
+      r = 100;
+      b = 100;
+      g = 255;
+    }
     pt->setPercentage(mPercentage);
     pt->setMidpoint(Point(0,0));
     pt->setPosition(posX ,posY + 90);
     pt->setTag(5000 + pos);
-    pt->setScaleX(200);
+    pt->setScaleX(250);
     pt->setScaleY(1);
+    pt->setColor(ccc3(r, b, g));
     pt->setType(ProgressTimer::Type::BAR);
     pt->setBarChangeRate(Point(1,0));
     pt->setZOrder(30);

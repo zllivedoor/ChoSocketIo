@@ -15,14 +15,14 @@
       "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
       "classname": "CCNode",
       "name": "bg1",
-      "canedit": false,
+      "canedit": true,
       "objecttag": 10003,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 479,
-      "y": 324,
+      "x": 567,
+      "y": 320,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -44,41 +44,13 @@
       "classname": "CCNode",
       "name": null,
       "canedit": true,
-      "objecttag": 10014,
-      "rotation": 0,
-      "scalex": 1,
-      "scaley": 1,
-      "visible": 1,
-      "x": 476,
-      "y": 316,
-      "zorder": 1,
-      "gameobjects": [],
-      "components": [
-        {
-          "__type": "ComGUIAdapterSurrogate:#EditorCommon.JsonModel.Component",
-          "classname": "GUIComponent",
-          "name": "GUIComponent",
-          "file": null,
-          "fileData": {
-            "path": "ui/DemoHead_UI/DemoHead_UI.json",
-            "plistFile": null,
-            "resourceType": 0
-          }
-        }
-      ]
-    },
-    {
-      "__type": "ComGameObjectSurrogate:#EditorCommon.JsonModel",
-      "classname": "CCNode",
-      "name": null,
-      "canedit": true,
       "objecttag": 10015,
       "rotation": 0,
       "scalex": 1,
       "scaley": 1,
       "visible": 1,
-      "x": 472,
-      "y": 183,
+      "x": 818.86114501953125,
+      "y": 87.583290100097656,
       "zorder": 1,
       "gameobjects": [],
       "components": [
@@ -98,9 +70,10 @@
   ],
   "CanvasSize": {
     "_height": 640,
-    "_width": 960
+    "_width": 1136
   },
-  "Version": "1.1.0.0",
+  "Triggers": null,
+  "Version": "1.2.0.1",
   "components": [
     {
       "__type": "ComSceneSurrogate:#EditorCommon.JsonModel.Component",
@@ -121,4 +94,5 @@
       "loop": 1
     }
   ]
+}
 }
